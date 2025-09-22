@@ -16,7 +16,7 @@ export const useThemeStore = create((set) => ({
 }));
 
 // Authentication store
-export const useAuthStore = create((set, get) => ({
+export const useAuthStore = create((set) => ({
   isAuthenticated: false,
   user: null,
   

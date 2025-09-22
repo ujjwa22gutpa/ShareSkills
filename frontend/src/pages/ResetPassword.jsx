@@ -81,7 +81,7 @@ const ResetPassword = () => {
     // Password validation
     if (!formData.password) {
       newErrors.password = 'Password is required';
-    } else if (!checks.length) {
+    } else if (formData.password.length < 8) {
       newErrors.password = 'Password must be at least 8 characters long';
     } else if (strength < 3) {
       newErrors.password = 'Password is too weak. Include uppercase, lowercase, numbers, and special characters';
@@ -382,7 +382,7 @@ const ResetPassword = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.5 }}
             type="submit"
-            disabled={loading || Object.keys(errors).length > 0}
+            disabled={loading}
             className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg flex items-center justify-center space-x-2"
           >
             {loading ? (

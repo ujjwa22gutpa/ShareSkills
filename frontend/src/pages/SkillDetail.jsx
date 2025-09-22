@@ -9,7 +9,6 @@ export default function SkillDetail() {
   const [skill, setSkill] = useState(null);
   const [reviews, setReviews] = useState([]);
   const [showBookingModal, setShowBookingModal] = useState(false);
-  const [showContactModal, setShowContactModal] = useState(false);
   const [activeTab, setActiveTab] = useState('overview');
 
   useEffect(() => {

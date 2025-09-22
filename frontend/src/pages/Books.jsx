@@ -415,13 +415,17 @@ export default function Books() {
                         >
                           📖 View Details
                         </Link>
-                        <motion.button 
-                          whileHover={{ scale: 1.05 }}
-                          whileTap={{ scale: 0.95 }}
-                          className="px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-2xl text-gray-700 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 text-sm font-bold shadow-md hover:shadow-lg"
+                        <Link
+                          to={`/contact-seller/${book.id}`}
                         >
-                          💬
-                        </motion.button>
+                          <motion.button 
+                            whileHover={{ scale: 1.05 }}
+                            whileTap={{ scale: 0.95 }}
+                            className="px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-2xl text-gray-700 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 text-sm font-bold shadow-md hover:shadow-lg"
+                          >
+                            💬
+                          </motion.button>
+                        </Link>
                       </div>
                     </div>
                   </motion.div>

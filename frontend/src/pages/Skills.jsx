@@ -11,7 +11,6 @@ export default function Skills() {
   const [selectedRateRange, setSelectedRateRange] = useState(hourlyRateRanges[0]);
   const [selectedAvailability, setSelectedAvailability] = useState('All Times');
   const [sortBy, setSortBy] = useState('newest');
-  const [showFilters, setShowFilters] = useState(false);
 
   // Filter and sort skills
   const filteredSkills = useMemo(() => {
@@ -41,10 +40,11 @@ export default function Skills() {
             return a.hourlyRate - b.hourlyRate;
           case 'rate-high':
             return b.hourlyRate - a.hourlyRate;
-          case 'rating':
+          case 'rating': {
             const aRating = a.tutor?.rating || a.student?.rating || 0;
             const bRating = b.tutor?.rating || b.student?.rating || 0;
             return bRating - aRating;
+          }
           case 'newest':
             return new Date(b.postedDate) - new Date(a.postedDate);
           default:
