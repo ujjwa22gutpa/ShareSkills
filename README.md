@@ -1,6 +1,6 @@
 # College Marketplace
 
-A frontend college marketplace application for books and skills sharing.
+A full-stack college marketplace application for books and skills sharing.
 
 ## Project Structure
 
@@ -11,6 +11,10 @@ college-marketplace/
 │   ├── public/        # Static assets
 │   ├── package.json   # Frontend dependencies
 │   └── ...
+├── backend/           # Express.js backend API
+│   ├── src/           # Backend source code
+│   ├── package.json   # Backend dependencies
+│   └── ...
 ├── package.json       # Root workspace configuration
 └── README.md
 ```
@@ -20,7 +24,7 @@ college-marketplace/
 ### Root Commands (Recommended)
 
 ```sh
-# Install dependencies for frontend
+# Install dependencies for both frontend and backend
 npm install
 
 # Start frontend development server

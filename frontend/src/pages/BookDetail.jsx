@@ -97,9 +97,12 @@ export default function BookDetail() {
 
             {/* Contact Button */}
             <div className="mt-8">
-              <button className="w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105">
+              <Link 
+                to={`/contact-seller/${book.id}`}
+                className="inline-block w-full md:w-auto px-8 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-xl font-semibold hover:shadow-lg transition-all duration-300 transform hover:scale-105 text-center"
+              >
                 Contact Seller
-              </button>
+              </Link>
             </div>
           </div>
         </motion.div>

@@ -10,7 +10,7 @@
     "test:watch": "vitest",
     "lint": "eslint . --ext .js,.jsx",
     "format": "prettier --write .",
-    "host":" -- host"
+    "host": "vite --host"
   },
   "dependencies": {
     "@react-three/drei": "^9.89.3",

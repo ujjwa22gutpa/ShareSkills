@@ -1,0 +1,47 @@
+{
+  "name": "college-marketplace",
+  "version": "1.0.0",
+  "description": "A full-stack college marketplace application for books and skills sharing",
+  "private": true,
+  "workspaces": [
+    "frontend",
+    "backend"
+  ],
+  "scripts": {
+    "dev": "npm run dev --workspace=frontend",
+    "dev:frontend": "npm run dev --workspace=frontend",
+    "dev:backend": "npm run dev --workspace=backend",
+    "dev:all": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "build": "npm run build --workspace=frontend",
+    "build:frontend": "npm run build --workspace=frontend",
+    "build:backend": "npm run build --workspace=backend",
+    "test": "npm run test --workspace=frontend",
+    "test:frontend": "npm run test --workspace=frontend",
+    "test:backend": "npm run test --workspace=backend",
+    "lint": "npm run lint --workspace=frontend",
+    "lint:frontend": "npm run lint --workspace=frontend",
+    "lint:backend": "npm run lint --workspace=backend",
+    "format": "npm run format --workspace=frontend",
+    "format:frontend": "npm run format --workspace=frontend",
+    "format:backend": "npm run format --workspace=backend",
+    "install:frontend": "npm install --workspace=frontend",
+    "install:backend": "npm install --workspace=backend",
+    "clean": "npm run clean --workspace=frontend && npm run clean --workspace=backend",
+    "clean:frontend": "npm run clean --workspace=frontend",
+    "clean:backend": "npm run clean --workspace=backend"
+  },
+  "devDependencies": {
+    "concurrently": "^8.2.0"
+  },
+  "keywords": [
+    "college",
+    "marketplace",
+    "books",
+    "skills",
+    "react",
+    "vite",
+    "tailwind"
+  ],
+  "author": "Your Name",
+  "license": "MIT"
+}

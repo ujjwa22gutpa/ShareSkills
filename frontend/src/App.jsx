@@ -16,6 +16,7 @@ import Skills from './pages/Skills';
 import SkillDetail from './pages/SkillDetail';
 import OfferSkill from './pages/OfferSkill';
 import Contact from './pages/Contact';
+import ContactSeller from './pages/ContactSeller';
 
 export default function App() {
   return (
@@ -26,6 +27,7 @@ export default function App() {
         <Route path="books" element={<Books />} />
         <Route path="books/:id" element={<BookDetail />} />
         <Route path="books/add" element={<AddBook />} />
+        <Route path="contact-seller/:id" element={<ContactSeller />} />
         <Route path="skills" element={<Skills />} />
         <Route path="skills/:id" element={<SkillDetail />} />
         <Route path="skills/offer" element={<OfferSkill />} />
