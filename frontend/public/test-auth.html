@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Auth Integration Test</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 20px; background: #f5f5f5; }
+        .test-section { margin: 20px 0; padding: 20px; border: 1px solid #ccc; background: white; border-radius: 8px; }
+        .success { color: green; font-weight: bold; }
+        .error { color: red; font-weight: bold; }
+        .info { color: blue; }
+        button { margin: 10px 5px; padding: 10px 20px; background: #007bff; color: white; border: none; border-radius: 4px; cursor: pointer; }
+        button:hover { background: #0056b3; }
+        textarea { width: 100%; height: 150px; font-family: monospace; font-size: 12px; }
+        h1 { color: #333; text-align: center; }
+        h2 { color: #555; margin-top: 0; }
+    </style>
+</head>
+<body>
+    <h1>🔐 Authentication Integration Test</h1>
+    <p style="text-align: center; color: #666;">Testing frontend-backend authentication integration</p>
+    
+    <div class="test-section">
+        <h2>🆕 Registration Test</h2>
+        <p>Test user registration with field validation</p>
+        <button onclick="testRegistration()">Test Registration</button>
+        <div id="regResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>🔑 Login Test</h2>
+        <p>Test user login and token generation</p>
+        <button onclick="testLogin()">Test Login</button>
+        <div id="loginResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>👤 Profile Test (Protected Route)</h2>
+        <p>Test accessing protected route with JWT token</p>
+        <button onclick="testProfile()">Test Profile</button>
+        <div id="profileResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>💾 Token Storage Test</h2>
+        <p>Check localStorage for tokens and user data</p>
+        <button onclick="checkTokens()">Check Tokens</button>
+        <button onclick="clearTokens()">Clear Tokens</button>
+        <div id="tokenResult"></div>
+    </div>
+    
+    <div class="test-section">
+        <h2>📝 Test Logs</h2>
+        <textarea id="logs" readonly placeholder="Test logs will appear here..."></textarea>
+        <br>
+        <button onclick="clearLogs()">Clear Logs</button>
+    </div>
+
+    <script>
+        const API_BASE = 'http://localhost:5000/api';
+        
+        function log(message) {
+            const logs = document.getElementById('logs');
+            logs.value += new Date().toLocaleTimeString() + ': ' + message + '\\n';
+            logs.scrollTop = logs.scrollHeight;
+            console.log(message);
+        }
+        
+        function clearLogs() {
+            document.getElementById('logs').value = '';
+        }
+        
+        function clearTokens() {
+            localStorage.removeItem('accessToken');
+            localStorage.removeItem('refreshToken');
+            localStorage.removeItem('user');
+            localStorage.removeItem('isAuthenticated');
+            log('Tokens cleared from localStorage');
+            checkTokens();
+        }
+        
+        async function testRegistration() {
+            const resultDiv = document.getElementById('regResult');
+            resultDiv.innerHTML = '<span class="info">Testing registration...</span>';
+            
+            try {
+                const testUser = {
+                    firstName: 'Frontend',
+                    lastName: 'Test',
+                    email: 'frontend.test.' + Date.now() + '@example.com', // Unique email
+                    password: 'test123'
+                };
+                
+                log('Testing registration with: ' + testUser.email);
+                
+                const response = await fetch(\`\${API_BASE}/auth/register\`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(testUser)
+                });
+                
+                const data = await response.json();
+                log('Registration response: ' + JSON.stringify(data, null, 2));
+                
+                if (response.ok && data.success) {
+                    // Store tokens like the frontend would
+                    if (data.data && data.data.accessToken) {
+                        localStorage.setItem('accessToken', data.data.accessToken);
+                        localStorage.setItem('refreshToken', data.data.refreshToken);
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
+                        localStorage.setItem('isAuthenticated', 'true');
+                    }
+                    
+                    resultDiv.innerHTML = \`<span class="success">✅ Registration successful!<br>User: \${data.data.user.email}<br>ID: \${data.data.user.id}</span>\`;
+                    log('Registration successful for: ' + data.data.user.email);
+                    checkTokens();
+                } else {
+                    resultDiv.innerHTML = \`<span class="error">❌ Registration failed: \${data.message}</span>\`;
+                    log('Registration failed: ' + data.message);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = \`<span class="error">❌ Network error: \${error.message}</span>\`;
+                log('Registration error: ' + error.message);
+                console.error('Registration error:', error);
+            }
+        }
+        
+        async function testLogin() {
+            const resultDiv = document.getElementById('loginResult');
+            resultDiv.innerHTML = '<span class="info">Testing login...</span>';
+            
+            try {
+                // Try to use the stored user email, or a test email
+                const storedUser = localStorage.getItem('user');
+                let email = 'john.doe.test@example.com'; // Default test email
+                
+                if (storedUser) {
+                    const userData = JSON.parse(storedUser);
+                    email = userData.email;
+                }
+                
+                const credentials = {
+                    email: email,
+                    password: 'test123'
+                };
+                
+                log('Testing login with: ' + email);
+                
+                const response = await fetch(\`\${API_BASE}/auth/login\`, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    credentials: 'include',
+                    body: JSON.stringify(credentials)
+                });
+                
+                const data = await response.json();
+                log('Login response: ' + JSON.stringify(data, null, 2));
+                
+                if (response.ok && data.success) {
+                    // Store tokens like the frontend would
+                    if (data.data && data.data.accessToken) {
+                        localStorage.setItem('accessToken', data.data.accessToken);
+                        localStorage.setItem('refreshToken', data.data.refreshToken);
+                        localStorage.setItem('user', JSON.stringify(data.data.user));
+                        localStorage.setItem('isAuthenticated', 'true');
+                    }
+                    
+                    resultDiv.innerHTML = \`<span class="success">✅ Login successful!<br>User: \${data.data.user.email}<br>Name: \${data.data.user.firstName} \${data.data.user.lastName}</span>\`;
+                    log('Login successful for: ' + data.data.user.email);
+                    checkTokens();
+                } else {
+                    resultDiv.innerHTML = \`<span class="error">❌ Login failed: \${data.message}</span>\`;
+                    log('Login failed: ' + data.message);
+                }
+            } catch (error) {
+                resultDiv.innerHTML = \`<span class="error">❌ Network error: \${error.message}</span>\`;
+                log('Login error: ' + error.message);
+                console.error('Login error:', error);
+            }
+        }
+        
+        async function testProfile() {
+            const resultDiv = document.getElementById('profileResult');
+            resultDiv.innerHTML = '<span class="info">Testing profile...</span>';
+            
+            try {
+                const token = localStorage.getItem('accessToken');
+                
+                if (!token) {
+                    resultDiv.innerHTML = '<span class="error">❌ No access token found. Please login first.</span>';
+                    log('Profile test failed: No access token');
+                    return;
+                }
+                
+                log('Testing profile with token: ' + token.substring(0, 20) + '...');
+                
+                const response = await fetch(\`\${API_BASE}/auth/profile\`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': \`Bearer \${token}\`
+                    },
+                    credentials: 'include'
+                });
+                
+                const data = await response.json();
+                log('Profile response: ' + JSON.stringify(data, null, 2));
+                
+                if (response.ok && data.success) {
+                    resultDiv.innerHTML = \`<span class="success">✅ Profile retrieved!<br>Name: \${data.data.firstName} \${data.data.lastName}<br>Email: \${data.data.email}<br>Verified: \${data.data.isEmailVerified}</span>\`;
+                    log('Profile success for: ' + data.data.email);
+                } else {
+                    resultDiv.innerHTML = \`<span class="error">❌ Profile failed: \${data.message}</span>\`;
+                    log('Profile failed: ' + data.message);
+                    
+                    // If 401, token might be invalid
+                    if (response.status === 401) {
+                        log('Token appears to be invalid - clearing tokens');
+                        clearTokens();
+                    }
+                }
+            } catch (error) {
+                resultDiv.innerHTML = \`<span class="error">❌ Network error: \${error.message}</span>\`;
+                log('Profile error: ' + error.message);
+                console.error('Profile error:', error);
+            }
+        }
+        
+        function checkTokens() {
+            const resultDiv = document.getElementById('tokenResult');
+            const accessToken = localStorage.getItem('accessToken');
+            const refreshToken = localStorage.getItem('refreshToken');
+            const user = localStorage.getItem('user');
+            const isAuthenticated = localStorage.getItem('isAuthenticated');
+            
+            let html = '<div style="font-family: monospace; font-size: 14px;">';
+            
+            if (accessToken) {
+                html += \`<div><span class="success">✅ Access Token:</span> \${accessToken.substring(0, 30)}...</div>\`;
+            } else {
+                html += '<div><span class="error">❌ No Access Token</span></div>';
+            }
+            
+            if (refreshToken) {
+                html += \`<div><span class="success">✅ Refresh Token:</span> \${refreshToken.substring(0, 30)}...</div>\`;
+            } else {
+                html += '<div><span class="error">❌ No Refresh Token</span></div>';
+            }
+            
+            if (user) {
+                const userData = JSON.parse(user);
+                html += \`<div><span class="success">✅ User Data:</span> \${userData.firstName} \${userData.lastName} (\${userData.email})</div>\`;
+            } else {
+                html += '<div><span class="error">❌ No User Data</span></div>';
+            }
+            
+            if (isAuthenticated === 'true') {
+                html += '<div><span class="success">✅ Authenticated: true</span></div>';
+            } else {
+                html += '<div><span class="error">❌ Not Authenticated</span></div>';
+            }
+            
+            html += '</div>';
+            resultDiv.innerHTML = html;
+            
+            log('Token check completed - authenticated: ' + (isAuthenticated === 'true'));
+        }
+        
+        // Test CORS by checking if we can reach the backend
+        async function testCORS() {
+            try {
+                log('Testing CORS connection to backend...');
+                const response = await fetch(\`\${API_BASE}/auth/login\`, {
+                    method: 'OPTIONS',
+                    headers: {
+                        'Origin': window.location.origin
+                    }
+                });
+                log('CORS test successful - backend is accessible');
+            } catch (error) {
+                log('CORS test failed: ' + error.message);
+            }
+        }
+        
+        // Initial setup
+        window.onload = function() {
+            log('🔐 Auth Integration Test Page Loaded');
+            log('Frontend: ' + window.location.origin);
+            log('Backend: ' + API_BASE);
+            testCORS();
+            checkTokens();
+        };
+    </script>
+</body>
+</html>

@@ -201,7 +201,7 @@ export default function Navbar() {
                     animate={{ opacity: 1, x: 0 }}
                     className="text-sm font-medium text-gray-700 dark:text-gray-300 bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 px-4 py-2 rounded-full border border-gray-200 dark:border-gray-600"
                   >
-                    <span className="text-blue-600 dark:text-blue-400">👋</span> {user?.name}
+                    <span className="text-blue-600 dark:text-blue-400">👋</span> {user?.firstName} {user?.lastName}
                   </motion.div>
                   <motion.button
                     onClick={handleLogout}
@@ -386,7 +386,7 @@ export default function Navbar() {
                   <div className="space-y-3">
                     <div className="px-4 py-2 text-center bg-gradient-to-r from-gray-50 to-gray-100 dark:from-gray-800 dark:to-gray-700 rounded-lg">
                       <p className="text-sm font-medium text-gray-700 dark:text-gray-300">
-                        <span className="text-blue-600 dark:text-blue-400">👋</span> Welcome, {user?.name}!
+                        <span className="text-blue-600 dark:text-blue-400">👋</span> Welcome, {user?.firstName} {user?.lastName}!
                       </p>
                     </div>
                     <motion.button

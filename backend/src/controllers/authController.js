@@ -2,7 +2,7 @@ import User from '../models/User.js';
 import { AppError } from '../utils/appError.js';
 import { catchAsync, sendSuccessResponse } from '../utils/helpers.js';
 import { generateTokenPair } from '../utils/jwt.js';
-import { sendOTPEmail, sendPasswordResetEmail } from '../utils/email.js';
+import { sendOTPEmail, sendPasswordResetEmail, sendPasswordResetOTPEmail } from '../utils/email.js';
 import {
   registerSchema,
   loginSchema,
@@ -209,34 +209,54 @@ export const resendOTP = catchAsync(async (req, res, next) => {
  * Secure forgot password - request password reset OTP
  */
 export const forgotPassword = catchAsync(async (req, res, next) => {
+  console.log('🚀 Forgot Password Request Received');
+  console.log('📧 Request Body:', req.body);
+  
   // Validate request body
   const { error, value } = forgotPasswordSchema.validate(req.body);
   if (error) {
+    console.log('❌ Validation Error:', error.details[0].message);
     return next(new AppError(error.details[0].message, 400));
   }
 
   const { email } = value;
+  console.log('✅ Email extracted:', email);
 
   // Find user
   const user = await User.findOne({ email });
+  console.log('👤 User found:', user ? `Yes (${user.firstName} ${user.lastName})` : 'No');
+  
   if (!user) {
+    console.log('⚠️ User not found, returning generic success message');
     // Don't reveal if user exists or not (security)
     return sendSuccessResponse(res, 200, 'If a user with this email exists, a password reset OTP has been sent');
   }
 
   try {
+    console.log('🔄 Generating OTP...');
     // Generate secure password reset OTP with rate limiting
     const otp = user.generatePasswordResetOTP();
     await user.save();
+    console.log('✅ OTP generated and saved');
 
-    // Send OTP via email (for now, we'll just log it for testing)
-    console.log(`� Password Reset OTP for ${email}: ${otp}`);
+    // Send OTP via email with fallback to console
+    console.log(`🔐 Password Reset OTP for ${email}: ${otp}`);
     
-    // In production, uncomment this:
-    // await sendOTPEmail(email, user.firstName, otp);
+    // Send real email with fallback to console
+    try {
+      console.log('📤 Attempting to send email...');
+      await sendPasswordResetOTPEmail(email, user.firstName, otp);
+      console.log(`✅ Password reset OTP email sent successfully to ${email}`);
+    } catch (emailError) {
+      console.error(`❌ Failed to send email to ${email}:`, emailError.message);
+      console.log(`🔐 Fallback - Password Reset OTP for ${email}: ${otp}`);
+      // Don't fail the request if email fails, user can still use console OTP
+    }
 
+    console.log('📤 Sending success response to frontend');
     sendSuccessResponse(res, 200, 'Password reset OTP sent to your email');
   } catch (error) {
+    console.log('❌ Error in forgot password process:', error.message);
     if (error.message.includes('Too many password reset attempts')) {
       return next(new AppError(error.message, 429));
     }
@@ -289,13 +309,18 @@ export const verifyPasswordResetOTP = catchAsync(async (req, res, next) => {
  * Reset password with verified OTP (final step)
  */
 export const resetPassword = catchAsync(async (req, res, next) => {
+  console.log('🔐 Reset Password Request Received');
+  console.log('📧 Request Body:', req.body);
+  
   // Validate request body
   const { error, value } = resetPasswordSchema.validate(req.body);
   if (error) {
+    console.log('❌ Validation Error:', error.details[0].message);
     return next(new AppError(error.details[0].message, 400));
   }
 
   const { email, otp, password } = value;
+  console.log('✅ Validation passed - Email:', email, 'OTP:', otp, 'Password length:', password.length);
 
   // Find user
   const user = await User.findOne({ email }).select('+password');

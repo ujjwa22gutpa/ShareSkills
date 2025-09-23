@@ -25,7 +25,7 @@ export const useAuthStore = create((set, get) => ({
   
   // Initialize auth state from token
   initAuth: () => {
-    const token = localStorage.getItem('token');
+    const token = localStorage.getItem('accessToken');
     if (token) {
       // Verify token is still valid by attempting to get user info
       // For now, we'll just check if token exists
@@ -48,8 +48,11 @@ export const useAuthStore = create((set, get) => ({
         });
       } else {
         // Clear invalid token
-        localStorage.removeItem('token');
+        localStorage.removeItem('accessToken');
+        localStorage.removeItem('refreshToken');
         localStorage.removeItem('userData');
+        localStorage.removeItem('user');
+        localStorage.removeItem('isAuthenticated');
       }
     }
   },
@@ -59,7 +62,7 @@ export const useAuthStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await authService.register(userData);
-      const { user, token } = response.data;
+      const { user, accessToken } = response.data; // Backend returns data in response.data from authService
       
       // Format user data for consistent use across app
       const formattedUser = {
@@ -67,8 +70,8 @@ export const useAuthStore = create((set, get) => ({
         name: `${user.firstName} ${user.lastName}` // Add name property for navbar
       };
       
-      // Store token and user data
-      localStorage.setItem('token', token);
+      // Store token and user data (using accessToken from backend)
+      localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('userData', JSON.stringify(formattedUser));
       
       set({ 
@@ -96,7 +99,7 @@ export const useAuthStore = create((set, get) => ({
     set({ loading: true, error: null });
     try {
       const response = await authService.login(credentials);
-      const { user, token } = response.data;
+      const { user, accessToken } = response.data; // Backend returns data in response.data from authService
       
       // Format user data for consistent use across app
       const formattedUser = {
@@ -104,8 +107,8 @@ export const useAuthStore = create((set, get) => ({
         name: `${user.firstName} ${user.lastName}` // Add name property for navbar
       };
       
-      // Store token and user data
-      localStorage.setItem('token', token);
+      // Store token and user data (using accessToken from backend)
+      localStorage.setItem('accessToken', accessToken);
       localStorage.setItem('userData', JSON.stringify(formattedUser));
       
       set({ 
@@ -138,8 +141,11 @@ export const useAuthStore = create((set, get) => ({
       console.warn('Logout request failed, but clearing local state');
     } finally {
       // Always clear local state
-      localStorage.removeItem('token');
+      localStorage.removeItem('accessToken');
+      localStorage.removeItem('refreshToken');
       localStorage.removeItem('userData');
+      localStorage.removeItem('user');
+      localStorage.removeItem('isAuthenticated');
       set({ 
         isAuthenticated: false, 
         user: null,

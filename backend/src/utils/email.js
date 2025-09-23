@@ -5,7 +5,9 @@ import nodemailer from 'nodemailer';
  */
 const createTransporter = () => {
   try {
-    if (process.env.NODE_ENV === 'production') {
+    // Always use Gmail SMTP if credentials are provided
+    if (process.env.EMAIL_USER && process.env.EMAIL_PASSWORD && process.env.EMAIL_PASSWORD !== 'your-gmail-app-password-here') {
+      console.log('📧 Using Gmail SMTP for email delivery');
       return nodemailer.createTransport({
         service: process.env.EMAIL_SERVICE || 'gmail',
         auth: {
@@ -14,7 +16,9 @@ const createTransporter = () => {
         }
       });
     }
-    // Development - Ethereal (will likely fail with placeholder creds, but we catch it later)
+    
+    console.log('📧 Gmail credentials not configured, using Ethereal fallback');
+    // Fallback - Ethereal (for development without real email)
     return nodemailer.createTransport({
       host: 'smtp.ethereal.email',
       port: 587,
@@ -93,6 +97,51 @@ export const sendOTPEmail = async (email, firstName, otp) => {
       <p>Your verification code is:</p>
       <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
         <h1 style="color: #007bff; font-size: 32px; margin: 0; letter-spacing: 5px;">${otp}</h1>
+      </div>
+      <p style="color: #666; font-size: 14px;">This code will expire in 10 minutes.</p>
+      <p style="color: #666; font-size: 14px;">If you didn't request this, please ignore this email.</p>
+      <hr style="border: 1px solid #eee; margin: 30px 0;">
+      <p style="color: #999; font-size: 12px; text-align: center;">
+        Best regards,<br>
+        College Marketplace Team
+      </p>
+    </div>
+  `;
+  
+  await sendEmail({ to: email, subject, text, html });
+};
+
+/**
+ * Send password reset OTP email
+ * @param {string} email - User email
+ * @param {string} firstName - User first name
+ * @param {string} otp - Password reset OTP
+ */
+export const sendPasswordResetOTPEmail = async (email, firstName, otp) => {
+  const subject = 'Password Reset OTP - College Marketplace';
+  const text = `
+    Hi ${firstName},
+    
+    You requested a password reset for your College Marketplace account.
+    
+    Your password reset verification code is: ${otp}
+    
+    This code will expire in 10 minutes.
+    
+    If you didn't request this, please ignore this email.
+    
+    Best regards,
+    College Marketplace Team
+  `;
+  
+  const html = `
+    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+      <h2 style="color: #333; text-align: center;">Password Reset Verification</h2>
+      <p>Hi ${firstName},</p>
+      <p>You requested a password reset for your College Marketplace account.</p>
+      <p>Your verification code is:</p>
+      <div style="background-color: #f8f9fa; padding: 20px; text-align: center; border-radius: 8px; margin: 20px 0;">
+        <h1 style="color: #dc3545; font-size: 32px; margin: 0; letter-spacing: 5px;">${otp}</h1>
       </div>
       <p style="color: #666; font-size: 14px;">This code will expire in 10 minutes.</p>
       <p style="color: #666; font-size: 14px;">If you didn't request this, please ignore this email.</p>

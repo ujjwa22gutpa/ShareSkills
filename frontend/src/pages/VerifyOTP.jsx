@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Shield, CheckCircle, AlertCircle, RotateCcw, Send } from 'lucide-react';
+import { authService } from '../services/authService';
 
 const VerifyOTP = () => {
   const navigate = useNavigate();
@@ -15,13 +16,21 @@ const VerifyOTP = () => {
   const inputRefs = useRef([]);
 
   const email = localStorage.getItem('resetEmail');
+  
+  console.log('🔍 VerifyOTP: Component mounted, checking for resetEmail...');
+  console.log('🔍 VerifyOTP: resetEmail from localStorage:', email);
 
   useEffect(() => {
+    console.log('🔍 VerifyOTP: useEffect triggered, email value:', email);
+    
     // Redirect if no email found
     if (!email) {
+      console.log('❌ VerifyOTP: No email found, redirecting to forgot-password');
       navigate('/forgot-password');
       return;
     }
+    
+    console.log('✅ VerifyOTP: Email found, proceeding with OTP verification setup');
 
     // Focus first input on mount
     if (inputRefs.current[0]) {
@@ -100,29 +109,30 @@ const VerifyOTP = () => {
     setError('');
 
     try {
-      // Simulate OTP verification API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
-      
+      // Verify OTP using real backend API
       const enteredOTP = otpToVerify.join('');
       
-      // Simple OTP validation (in real app, this would be server-side)
-      if (enteredOTP === '123456') {
-        setSuccess(true);
-        // Store verification status
-        localStorage.setItem('otpVerified', 'true');
-        
-        // Navigate to reset password after success animation
-        setTimeout(() => {
-          navigate('/reset-password');
-        }, 1500);
-      } else {
-        setError('Invalid OTP. Please try again.');
-        // Clear OTP inputs on error
-        setOtp(['', '', '', '', '', '']);
-        inputRefs.current[0]?.focus();
-      }
+      const response = await authService.verifyResetOTP({
+        email: email,
+        otp: enteredOTP
+      });
+      
+      setSuccess(true);
+      // Store verification status and OTP for password reset
+      localStorage.setItem('otpVerified', 'true');
+      localStorage.setItem('verifiedOTP', enteredOTP);
+      
+      // Navigate to reset password after success animation
+      setTimeout(() => {
+        navigate('/reset-password');
+      }, 1500);
+      
     } catch (error) {
-      setError('Verification failed. Please try again.');
+      const errorMessage = error.message || 'Invalid OTP. Please try again.';
+      setError(errorMessage);
+      // Clear OTP inputs on error
+      setOtp(['', '', '', '', '', '']);
+      inputRefs.current[0]?.focus();
     } finally {
       setLoading(false);
     }
@@ -134,8 +144,8 @@ const VerifyOTP = () => {
     setOtp(['', '', '', '', '', '']);
 
     try {
-      // Simulate resend API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      // Resend OTP using real backend API
+      await authService.forgotPassword(email);
       
       // Reset timer
       setTimeLeft(120);
@@ -146,7 +156,8 @@ const VerifyOTP = () => {
       inputRefs.current[0]?.focus();
       
     } catch (error) {
-      setError('Failed to resend OTP. Please try again.');
+      const errorMessage = error.message || 'Failed to resend OTP. Please try again.';
+      setError(errorMessage);
     } finally {
       setResendLoading(false);
     }

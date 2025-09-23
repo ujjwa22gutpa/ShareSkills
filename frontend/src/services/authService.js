@@ -100,9 +100,16 @@ export const authService = {
    */
   forgotPassword: async (email) => {
     try {
+      console.log('🌐 AuthService: Making API call to /auth/forgot-password with payload:', { email });
+      
       const response = await api.post('/auth/forgot-password', { email });
+      
+      console.log('🌐 AuthService: API response received:', response.data);
+      
       return response.data;
     } catch (error) {
+      console.error('🌐 AuthService: API call failed:', error);
+      console.error('🌐 AuthService: Error details:', error.response?.data || error.message);
       throw error.response?.data || error;
     }
   },
@@ -133,7 +140,11 @@ export const authService = {
    */
   resetPassword: async (resetData) => {
     try {
+      console.log('🌐 AuthService: Making API call to /auth/reset-password with payload:', resetData);
+      
       const response = await api.post('/auth/reset-password', resetData);
+      
+      console.log('🌐 AuthService: Reset password API response received:', response.data);
       
       // Store tokens from auto-login after password reset
       if (response.data.success && response.data.data) {

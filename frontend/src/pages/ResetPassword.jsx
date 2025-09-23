@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
 import { ArrowLeft, Key, Eye, EyeOff, CheckCircle, AlertCircle, Lock, Shield } from 'lucide-react';
+import { authService } from '../services/authService';
 
 const ResetPassword = () => {
   const navigate = useNavigate();
@@ -15,17 +16,25 @@ const ResetPassword = () => {
   const [loading, setLoading] = useState(false);
   const [success, setSuccess] = useState(false);
   const [passwordStrength, setPasswordStrength] = useState(0);
+  const [checks, setChecks] = useState({
+    length: false,
+    lowercase: false,
+    uppercase: false,
+    number: false,
+    special: false
+  });
 
   const email = localStorage.getItem('resetEmail');
   const otpVerified = localStorage.getItem('otpVerified');
+  const verifiedOTP = localStorage.getItem('verifiedOTP');
 
   useEffect(() => {
     // Redirect if not coming from proper flow
-    if (!email || !otpVerified) {
+    if (!email || !otpVerified || !verifiedOTP) {
       navigate('/forgot-password');
       return;
     }
-  }, [email, otpVerified, navigate]);
+  }, [email, otpVerified, verifiedOTP, navigate]);
 
   // Password strength checker
   const checkPasswordStrength = (password) => {
@@ -59,8 +68,9 @@ const ResetPassword = () => {
 
     // Update password strength for password field
     if (name === 'password') {
-      const { strength } = checkPasswordStrength(value);
+      const { strength, checks: passwordChecks } = checkPasswordStrength(value);
       setPasswordStrength(strength);
+      setChecks(passwordChecks);
     }
 
     // Clear confirm password error when passwords start matching
@@ -75,25 +85,38 @@ const ResetPassword = () => {
   };
 
   const validateForm = () => {
+    console.log('🔍 ResetPassword: Validating form...');
+    console.log('🔍 ResetPassword: formData.password:', `"${formData.password}"`);
+    console.log('🔍 ResetPassword: formData.confirmPassword:', `"${formData.confirmPassword}"`);
+    
     const newErrors = {};
-    const { strength, checks } = checkPasswordStrength(formData.password);
+    const { strength, checks: passwordChecks } = checkPasswordStrength(formData.password);
+
+    console.log('🔍 ResetPassword: Password strength:', strength);
+    console.log('🔍 ResetPassword: Password checks:', passwordChecks);
 
     // Password validation
     if (!formData.password) {
+      console.log('❌ ResetPassword: Password is empty');
       newErrors.password = 'Password is required';
     } else if (formData.password.length < 8) {
+      console.log('❌ ResetPassword: Password too short');
       newErrors.password = 'Password must be at least 8 characters long';
     } else if (strength < 3) {
+      console.log('❌ ResetPassword: Password too weak');
       newErrors.password = 'Password is too weak. Include uppercase, lowercase, numbers, and special characters';
     }
 
     // Confirm password validation
     if (!formData.confirmPassword) {
+      console.log('❌ ResetPassword: Confirm password is empty');
       newErrors.confirmPassword = 'Please confirm your password';
     } else if (formData.password !== formData.confirmPassword) {
+      console.log('❌ ResetPassword: Passwords do not match');
       newErrors.confirmPassword = 'Passwords do not match';
     }
 
+    console.log('🔍 ResetPassword: Validation errors:', newErrors);
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
@@ -101,23 +124,35 @@ const ResetPassword = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    if (!validateForm()) return;
+    console.log('🔄 ResetPassword: Form submitted');
+    console.log('🔄 ResetPassword: Current formData:', formData);
+    console.log('🔄 ResetPassword: Password length:', formData.password.length);
+    console.log('🔄 ResetPassword: Confirm password length:', formData.confirmPassword.length);
+    
+    if (!validateForm()) {
+      console.log('❌ ResetPassword: Validation failed');
+      console.log('❌ ResetPassword: Current errors:', errors);
+      return;
+    }
+    
+    console.log('✅ ResetPassword: Validation passed, proceeding with API call');
 
     setLoading(true);
 
     try {
-      // Simulate password reset API call
-      await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // In a real app, this would make an API call to reset the password
-      // Backend integration: Replace with actual password reset API call
-      // const resetResponse = await api.resetPassword({ email, password: formData.password });
+      // Reset password using real backend API
+      const response = await authService.resetPassword({
+        email: email,
+        otp: verifiedOTP,
+        password: formData.password
+      });
       
       setSuccess(true);
       
       // Clean up localStorage
       localStorage.removeItem('resetEmail');
       localStorage.removeItem('otpVerified');
+      localStorage.removeItem('verifiedOTP');
       
       // Navigate to login after success animation
       setTimeout(() => {
@@ -129,7 +164,8 @@ const ResetPassword = () => {
       }, 2500);
       
     } catch (error) {
-      setErrors({ submit: 'Failed to reset password. Please try again.' });
+      const errorMessage = error.message || 'Failed to reset password. Please try again.';
+      setErrors({ submit: errorMessage });
     } finally {
       setLoading(false);
     }
@@ -195,8 +231,6 @@ const ResetPassword = () => {
       </div>
     );
   }
-
-  const { checks } = checkPasswordStrength(formData.password);
 
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">

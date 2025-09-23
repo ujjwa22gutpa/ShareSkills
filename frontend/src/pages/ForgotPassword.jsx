@@ -2,6 +2,7 @@
 import React, { useState } from 'react';
 import { motion } from 'framer-motion';
 import { Link, useNavigate } from 'react-router-dom';
+import { authService } from '../services/authService';
 
 export default function ForgotPassword() {
   const navigate = useNavigate();
@@ -56,22 +57,32 @@ export default function ForgotPassword() {
     }
 
     try {
-      // Simulate API call to send OTP
-      await new Promise(resolve => setTimeout(resolve, 2000));
+      console.log('🔄 Frontend: Calling authService.forgotPassword with email:', formData.email);
       
-      // In a real app, you would send email to backend
-      // Backend integration: Replace with actual OTP API call
+      // Send OTP to email using real backend API
+      const response = await authService.forgotPassword(formData.email);
+      
+      console.log('✅ Frontend: Response received from backend:', response);
       
       // Store email in localStorage for the next step
+      console.log('💾 Frontend: Storing email in localStorage...');
       localStorage.setItem('resetEmail', formData.email);
+      console.log('💾 Frontend: Email stored successfully');
       
       // Success message and redirect to OTP verification
-      alert(`OTP has been sent to ${formData.email}. Please check your email.`);
+      console.log('🚀 Frontend: About to show alert and navigate...');
+      alert(`OTP has been sent to ${formData.email}. Please check your email inbox.`);
+      
+      console.log('🧭 Frontend: Calling navigate to /verify-otp...');
       navigate('/verify-otp');
+      console.log('🧭 Frontend: Navigate call completed');
       
     } catch (error) {
-      // Backend integration: Handle actual API errors
-      setErrors({ submit: 'Failed to send OTP. Please try again.' });
+      console.error('❌ Frontend: Error in forgot password API call:', error);
+      console.error('❌ Frontend: Full error object:', error);
+      // Handle API errors
+      const errorMessage = error.message || 'Failed to send OTP. Please try again.';
+      setErrors({ submit: errorMessage });
     } finally {
       setIsSubmitting(false);
     }
