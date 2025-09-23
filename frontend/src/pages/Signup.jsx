@@ -6,7 +6,7 @@ import { useAuthStore } from '../main';
 
 export default function Signup() {
   const navigate = useNavigate();
-  const login = useAuthStore((s) => s.login);
+  const { register, loading, error, clearError } = useAuthStore();
   const [formData, setFormData] = useState({
     firstName: '',
     lastName: '',
@@ -81,6 +81,9 @@ export default function Signup() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Clear any previous auth errors
+    clearError();
+    
     // Validate form
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -90,23 +93,29 @@ export default function Signup() {
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Prepare data for backend (exclude confirmPassword)
+      const registrationData = {
+        firstName: formData.firstName.trim(),
+        lastName: formData.lastName.trim(),
+        email: formData.email.trim(),
+        password: formData.password
+      };
       
-      // In a real app, you would create account with your backend
-      // For demo purposes, we'll simulate successful signup
-      // Backend integration: Replace with actual registration API call
+      // Call register function from auth store
+      const result = await register(registrationData);
       
-      // Use auth store to login after signup
-      login({ name: formData.firstName });
-      
-      // Success message and redirect
-      alert('Account created successfully! Welcome to Campus Market.');
-      navigate('/');
+      if (result.success) {
+        // Success - user is now automatically logged in
+        alert('Account created successfully! Welcome to Campus Market.');
+        navigate('/');
+      } else {
+        // Registration failed - show error
+        setErrors({ submit: result.error });
+      }
       
     } catch (error) {
-      // Backend integration: Handle actual API errors
-      setErrors({ submit: 'Signup failed. Please try again.' });
+      // Handle unexpected errors
+      setErrors({ submit: 'An unexpected error occurred. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -236,21 +245,21 @@ export default function Signup() {
             </div>
 
             {/* Submit Error Display */}
-            {errors.submit && (
+            {(errors.submit || error) && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                <p className="text-red-400 text-sm">{errors.submit}</p>
+                <p className="text-red-400 text-sm">{errors.submit || error}</p>
               </div>
             )}
 
             {/* Submit Button */}
             <motion.button
               type="submit"
-              disabled={isSubmitting}
-              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={isSubmitting || loading}
+              whileHover={{ scale: (isSubmitting || loading) ? 1 : 1.02 }}
+              whileTap={{ scale: (isSubmitting || loading) ? 1 : 0.98 }}
               className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             >
-              {isSubmitting ? (
+              {(isSubmitting || loading) ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
                   Creating Account...

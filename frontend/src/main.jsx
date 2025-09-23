@@ -6,6 +6,7 @@ import { BrowserRouter } from 'react-router-dom';
 import { create } from 'zustand';
 import './styles/index.css';
 import App from './App';
+import authService from './services/authService';
 
 const queryClient = new QueryClient();
 
@@ -16,41 +17,182 @@ export const useThemeStore = create((set) => ({
 }));
 
 // Authentication store
-export const useAuthStore = create((set) => ({
+export const useAuthStore = create((set, get) => ({
   isAuthenticated: false,
   user: null,
+  loading: false,
+  error: null,
   
-  // Initialize auth state from localStorage
+  // Initialize auth state from token
   initAuth: () => {
-    const isAuthenticated = localStorage.getItem('isAuthenticated') === 'true';
-    const userName = localStorage.getItem('userName');
-    if (isAuthenticated && userName) {
+    const token = localStorage.getItem('token');
+    if (token) {
+      // Verify token is still valid by attempting to get user info
+      // For now, we'll just check if token exists
+      const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+      if (userData.email) {
+        // Ensure user data has name property for navbar compatibility
+        const formattedUser = {
+          ...userData,
+          name: userData.name || `${userData.firstName || ''} ${userData.lastName || ''}`.trim()
+        };
+        
+        // Update localStorage with formatted data if needed
+        if (!userData.name && userData.firstName && userData.lastName) {
+          localStorage.setItem('userData', JSON.stringify(formattedUser));
+        }
+        
+        set({ 
+          isAuthenticated: true, 
+          user: formattedUser 
+        });
+      } else {
+        // Clear invalid token
+        localStorage.removeItem('token');
+        localStorage.removeItem('userData');
+      }
+    }
+  },
+  
+  // Register function
+  register: async (userData) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await authService.register(userData);
+      const { user, token } = response.data;
+      
+      // Format user data for consistent use across app
+      const formattedUser = {
+        ...user,
+        name: `${user.firstName} ${user.lastName}` // Add name property for navbar
+      };
+      
+      // Store token and user data
+      localStorage.setItem('token', token);
+      localStorage.setItem('userData', JSON.stringify(formattedUser));
+      
       set({ 
         isAuthenticated: true, 
-        user: { name: userName } 
+        user: formattedUser,
+        loading: false,
+        error: null
       });
+      
+      return { success: true, user: formattedUser };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Registration failed';
+      set({ 
+        loading: false, 
+        error: errorMessage,
+        isAuthenticated: false,
+        user: null
+      });
+      return { success: false, error: errorMessage };
     }
   },
   
   // Login function
-  login: (userData) => {
-    set({ 
-      isAuthenticated: true, 
-      user: userData 
-    });
-    localStorage.setItem('isAuthenticated', 'true');
-    localStorage.setItem('userName', userData.name);
+  login: async (credentials) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await authService.login(credentials);
+      const { user, token } = response.data;
+      
+      // Format user data for consistent use across app
+      const formattedUser = {
+        ...user,
+        name: `${user.firstName} ${user.lastName}` // Add name property for navbar
+      };
+      
+      // Store token and user data
+      localStorage.setItem('token', token);
+      localStorage.setItem('userData', JSON.stringify(formattedUser));
+      
+      set({ 
+        isAuthenticated: true, 
+        user: formattedUser,
+        loading: false,
+        error: null
+      });
+      
+      return { success: true, user: formattedUser };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Login failed';
+      set({ 
+        loading: false, 
+        error: errorMessage,
+        isAuthenticated: false,
+        user: null
+      });
+      return { success: false, error: errorMessage };
+    }
   },
   
   // Logout function
-  logout: () => {
-    set({ 
-      isAuthenticated: false, 
-      user: null 
-    });
-    localStorage.removeItem('isAuthenticated');
-    localStorage.removeItem('userName');
-  }
+  logout: async () => {
+    set({ loading: true });
+    try {
+      await authService.logout();
+    } catch (error) {
+      // Even if logout fails on server, clear local state
+      console.warn('Logout request failed, but clearing local state');
+    } finally {
+      // Always clear local state
+      localStorage.removeItem('token');
+      localStorage.removeItem('userData');
+      set({ 
+        isAuthenticated: false, 
+        user: null,
+        loading: false,
+        error: null
+      });
+    }
+  },
+  
+  // Forgot password function
+  forgotPassword: async (email) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await authService.forgotPassword({ email });
+      set({ loading: false });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Failed to send reset email';
+      set({ loading: false, error: errorMessage });
+      return { success: false, error: errorMessage };
+    }
+  },
+  
+  // Verify password reset OTP
+  verifyResetOTP: async (email, otp) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await authService.verifyResetOTP({ email, otp });
+      set({ loading: false });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Invalid OTP';
+      set({ loading: false, error: errorMessage });
+      return { success: false, error: errorMessage };
+    }
+  },
+  
+  // Reset password
+  resetPassword: async (email, otp, newPassword) => {
+    set({ loading: true, error: null });
+    try {
+      const response = await authService.resetPassword({ email, otp, newPassword });
+      set({ loading: false });
+      return { success: true, message: response.data.message };
+    } catch (error) {
+      const errorMessage = error.response?.data?.message || 'Password reset failed';
+      set({ loading: false, error: errorMessage });
+      return { success: false, error: errorMessage };
+    }
+  },
+  
+  // Clear error
+  clearError: () => set({ error: null })
 }));
 
 function ThemeProvider({ children }) {

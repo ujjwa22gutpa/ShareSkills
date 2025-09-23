@@ -6,7 +6,7 @@ import { useAuthStore } from '../main';
 
 export default function Login() {
   const navigate = useNavigate();
-  const login = useAuthStore((s) => s.login);
+  const { login, loading, error, clearError } = useAuthStore();
   const [formData, setFormData] = useState({
     email: '',
     password: ''
@@ -57,6 +57,9 @@ export default function Login() {
     e.preventDefault();
     setIsSubmitting(true);
     
+    // Clear any previous auth errors
+    clearError();
+    
     // Validate form
     const validationErrors = validateForm();
     if (Object.keys(validationErrors).length > 0) {
@@ -66,23 +69,27 @@ export default function Login() {
     }
 
     try {
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Prepare credentials for backend
+      const credentials = {
+        email: formData.email.trim(),
+        password: formData.password
+      };
       
-      // In a real app, you would authenticate with your backend
-      // For demo purposes, we'll simulate successful login
-      // Backend integration: Replace with actual authentication API call
+      // Call login function from auth store
+      const result = await login(credentials);
       
-      // Use auth store to login
-      login({ name: formData.email.split('@')[0] });
-      
-      // Success message and redirect
-      alert('Login successful! Welcome back.');
-      navigate('/');
+      if (result.success) {
+        // Success - user is now logged in
+        alert('Login successful! Welcome back.');
+        navigate('/');
+      } else {
+        // Login failed - show error
+        setErrors({ submit: result.error });
+      }
       
     } catch (error) {
-      // Backend integration: Handle actual API errors
-      setErrors({ submit: 'Invalid email or password. Please try again.' });
+      // Handle unexpected errors
+      setErrors({ submit: 'An unexpected error occurred. Please try again.' });
     } finally {
       setIsSubmitting(false);
     }
@@ -165,21 +172,21 @@ export default function Login() {
             </div>
 
             {/* Submit Error Display */}
-            {errors.submit && (
+            {(errors.submit || error) && (
               <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                <p className="text-red-400 text-sm">{errors.submit}</p>
+                <p className="text-red-400 text-sm">{errors.submit || error}</p>
               </div>
             )}
 
             {/* Submit Button */}
             <motion.button
               type="submit"
-              disabled={isSubmitting}
-              whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
-              whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
+              disabled={isSubmitting || loading}
+              whileHover={{ scale: (isSubmitting || loading) ? 1 : 1.02 }}
+              whileTap={{ scale: (isSubmitting || loading) ? 1 : 0.98 }}
               className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
             >
-              {isSubmitting ? (
+              {(isSubmitting || loading) ? (
                 <div className="flex items-center justify-center">
                   <div className="animate-spin rounded-full h-5 w-5 border-2 border-white border-t-transparent mr-2"></div>
                   Signing In...

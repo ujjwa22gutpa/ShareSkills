@@ -1,0 +1,417 @@
+{
+  "info": {
+    "name": "College Marketplace - Authentication API",
+    "description": "Complete authentication flow including registration, login, logout, and secure forgot password system",
+    "version": "1.0.0",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:5000",
+      "type": "string"
+    },
+    {
+      "key": "accessToken",
+      "value": "",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "🔐 Authentication Flow",
+      "item": [
+        {
+          "name": "1️⃣ Register User (Auto-Login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 201) {",
+                  "    const responseData = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', responseData.data.accessToken);",
+                  "    console.log('✅ Registration successful - Auto-logged in');",
+                  "    console.log('Access Token saved:', responseData.data.accessToken.substring(0, 20) + '...');",
+                  "} else {",
+                  "    console.log('❌ Registration failed');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Doe\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Register a new user and automatically login with JWT tokens. No email verification required."
+          },
+          "response": []
+        },
+        {
+          "name": "2️⃣ Login User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const responseData = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', responseData.data.accessToken);",
+                  "    console.log('✅ Login successful');",
+                  "    console.log('New Access Token saved:', responseData.data.accessToken.substring(0, 20) + '...');",
+                  "} else {",
+                  "    console.log('❌ Login failed');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"SecurePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Login with email and password to get fresh JWT tokens."
+          },
+          "response": []
+        },
+        {
+          "name": "3️⃣ Logout User",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    pm.collectionVariables.set('accessToken', '');",
+                  "    console.log('✅ Logout successful - Token cleared');",
+                  "} else {",
+                  "    console.log('❌ Logout failed');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{accessToken}}"
+              }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/logout",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "logout"]
+            },
+            "description": "Logout user and clear session. Requires valid access token."
+          },
+          "response": []
+        }
+      ],
+      "description": "Standard authentication flow: Register → Login → Logout"
+    },
+    {
+      "name": "🔒 Forgot Password Flow",
+      "item": [
+        {
+          "name": "1️⃣ Request Password Reset",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('✅ Password reset OTP sent');",
+                  "    console.log('📧 Check email or server console for OTP');",
+                  "    console.log('⏰ OTP expires in 15 minutes');",
+                  "} else {",
+                  "    console.log('❌ Failed to send reset OTP');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/forgot-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "forgot-password"]
+            },
+            "description": "Request password reset OTP. Always returns success for security (doesn't reveal if email exists)."
+          },
+          "response": []
+        },
+        {
+          "name": "2️⃣ Verify Reset OTP",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('✅ OTP verified successfully');",
+                  "    console.log('🔐 You can now reset your password');",
+                  "} else {",
+                  "    console.log('❌ Invalid or expired OTP');",
+                  "    console.log('⚠️ Check attempt limit (max 5 attempts)');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"123456\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-password-reset-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "verify-password-reset-otp"]
+            },
+            "description": "Verify the 6-digit OTP sent to email. Rate limited: max 5 attempts before 1-hour lockout."
+          },
+          "response": []
+        },
+        {
+          "name": "3️⃣ Reset Password (Auto-Login)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    const responseData = pm.response.json();",
+                  "    pm.collectionVariables.set('accessToken', responseData.data.accessToken);",
+                  "    console.log('✅ Password reset successful');",
+                  "    console.log('🎯 Auto-logged in with new password');",
+                  "    console.log('New Access Token saved:', responseData.data.accessToken.substring(0, 20) + '...');",
+                  "} else {",
+                  "    console.log('❌ Password reset failed');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"123456\",\n  \"password\": \"NewSecurePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/reset-password",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "reset-password"]
+            },
+            "description": "Reset password using verified OTP. Automatically logs user in with new password and provides fresh JWT tokens."
+          },
+          "response": []
+        },
+        {
+          "name": "4️⃣ Test New Password Login",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "if (pm.response.code === 200) {",
+                  "    console.log('✅ New password works perfectly');",
+                  "    console.log('🔐 Password reset flow completed successfully');",
+                  "} else {",
+                  "    console.log('❌ New password login failed');",
+                  "}"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"NewSecurePassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Test login with the new password to verify the password reset was successful."
+          },
+          "response": []
+        }
+      ],
+      "description": "Secure 3-step password reset: Request OTP → Verify OTP → Reset Password → Auto-Login"
+    },
+    {
+      "name": "🧪 Test Scenarios",
+      "item": [
+        {
+          "name": "❌ Test Invalid Login",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"WrongPassword\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/login",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "login"]
+            },
+            "description": "Test login with wrong password (should fail with 401)"
+          },
+          "response": []
+        },
+        {
+          "name": "❌ Test Invalid OTP",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"john.doe@example.com\",\n  \"otp\": \"000000\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/verify-password-reset-otp",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "verify-password-reset-otp"]
+            },
+            "description": "Test OTP verification with wrong OTP (should fail and increment attempts)"
+          },
+          "response": []
+        },
+        {
+          "name": "❌ Test Duplicate Registration",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"firstName\": \"John\",\n  \"lastName\": \"Duplicate\",\n  \"email\": \"john.doe@example.com\",\n  \"password\": \"AnotherPassword123\"\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/auth/register",
+              "host": ["{{baseUrl}}"],
+              "path": ["api", "auth", "register"]
+            },
+            "description": "Test registration with existing email (should fail with 409)"
+          },
+          "response": []
+        }
+      ],
+      "description": "Test error scenarios and edge cases"
+    }
+  ],
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "console.log('🚀 Running request to:', pm.request.url.toString());"
+        ]
+      }
+    },
+    {
+      "listen": "test",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "console.log('📊 Response Status:', pm.response.code, pm.response.status);",
+          "if (pm.response.headers.get('Content-Type') && pm.response.headers.get('Content-Type').includes('application/json')) {",
+          "    try {",
+          "        const responseData = pm.response.json();",
+          "        console.log('📝 Response Message:', responseData.message || 'No message');",
+          "    } catch (e) {",
+          "        console.log('📝 Could not parse JSON response');",
+          "    }",
+          "}",
+          "console.log('⏱️ Response Time:', pm.response.responseTime + 'ms');",
+          "console.log('---');"
+        ]
+      }
+    }
+  ]
+}
