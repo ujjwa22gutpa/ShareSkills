@@ -171,81 +171,54 @@ const VerifyOTP = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
         <motion.div
           initial={{ scale: 0.5, opacity: 0 }}
           animate={{ scale: 1, opacity: 1 }}
-          className="w-full max-w-md p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-2xl text-center"
+          className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm text-center"
         >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6"
-          >
+          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400" />
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Verification Successful!
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300">
-              Redirecting to password reset...
-            </p>
-          </motion.div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Verification Successful!
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">
+            Redirecting to password reset...
+          </p>
         </motion.div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-2xl"
+        className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
       >
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-16 h-16 bg-gradient-to-r from-blue-600 to-purple-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
-          >
-            <Shield className="w-8 h-8 text-white" />
-          </motion.div>
+          <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-6">
+            <Shield className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          </div>
           
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Verify OTP
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Enter the 6-digit code sent to
-            </p>
-            <p className="text-blue-600 dark:text-blue-400 font-medium">
-              {email}
-            </p>
-          </motion.div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Verify OTP
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">
+            Enter the 6-digit code sent to
+          </p>
+          <p className="text-blue-600 dark:text-blue-400 font-medium">
+            {email}
+          </p>
         </div>
 
         {/* OTP Input Fields */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="mb-6"
-        >
+        <div className="mb-6">
           <div className="flex justify-center space-x-3 mb-4">
             {otp.map((digit, index) => (
               <input
@@ -258,7 +231,7 @@ const VerifyOTP = () => {
                 onChange={(e) => handleInputChange(index, e.target.value)}
                 onKeyDown={(e) => handleKeyDown(index, e)}
                 onPaste={index === 0 ? handlePaste : undefined}
-                className={`w-12 h-12 text-center text-xl font-bold border-2 rounded-lg bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm transition-all duration-200 ${
+                className={`w-12 h-12 text-center text-xl font-bold border-2 rounded-lg bg-white dark:bg-gray-700 transition-colors duration-200 ${
                   digit
                     ? 'border-blue-500 dark:border-blue-400 text-gray-900 dark:text-white'
                     : 'border-gray-300 dark:border-gray-600 text-gray-500 dark:text-gray-400'
@@ -269,24 +242,15 @@ const VerifyOTP = () => {
           </div>
 
           {error && (
-            <motion.div
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              className="flex items-center justify-center space-x-2 text-red-600 dark:text-red-400 text-sm"
-            >
+            <div className="flex items-center justify-center space-x-2 text-red-600 dark:text-red-400 text-sm">
               <AlertCircle size={16} />
               <span>{error}</span>
-            </motion.div>
+            </div>
           )}
-        </motion.div>
+        </div>
 
         {/* Timer and Resend */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.5 }}
-          className="text-center mb-6"
-        >
+        <div className="text-center mb-6">
           {!canResend ? (
             <p className="text-gray-600 dark:text-gray-300 text-sm">
               Resend code in{' '}
@@ -302,12 +266,7 @@ const VerifyOTP = () => {
             >
               {resendLoading ? (
                 <>
-                  <motion.div
-                    animate={{ rotate: 360 }}
-                    transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  >
-                    <RotateCcw size={16} />
-                  </motion.div>
+                  <RotateCcw size={16} className="animate-spin" />
                   <span>Sending...</span>
                 </>
               ) : (
@@ -318,24 +277,17 @@ const VerifyOTP = () => {
               )}
             </button>
           )}
-        </motion.div>
+        </div>
 
         {/* Verify Button */}
-        <motion.button
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
+        <button
           onClick={() => handleVerifyOTP()}
           disabled={loading || otp.some(digit => !digit)}
-          className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg flex items-center justify-center space-x-2"
+          className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
         >
           {loading ? (
             <>
-              <motion.div
-                animate={{ rotate: 360 }}
-                transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-              />
+              <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
               <span>Verifying...</span>
             </>
           ) : (
@@ -344,15 +296,10 @@ const VerifyOTP = () => {
               <span>Verify OTP</span>
             </>
           )}
-        </motion.button>
+        </button>
 
         {/* Back to Login */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.7 }}
-          className="text-center mt-6"
-        >
+        <div className="text-center mt-6">
           <Link
             to="/login"
             className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors text-sm"
@@ -360,19 +307,14 @@ const VerifyOTP = () => {
             <ArrowLeft size={16} />
             <span>Back to Login</span>
           </Link>
-        </motion.div>
+        </div>
 
         {/* Development Note */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.8 }}
-          className="mt-6 p-3 bg-blue-50/50 dark:bg-blue-900/20 rounded-lg border border-blue-200/30 dark:border-blue-700/30"
-        >
+        <div className="mt-6 p-3 bg-blue-50 dark:bg-blue-900/20 rounded-lg border border-blue-200 dark:border-blue-700">
           <p className="text-xs text-blue-700 dark:text-blue-300 text-center">
             🔐 For demo: Use OTP <span className="font-mono font-bold">123456</span>
           </p>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

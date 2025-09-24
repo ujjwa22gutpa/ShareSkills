@@ -68,9 +68,9 @@ export default function Books() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-purple-50/20 dark:from-gray-900 dark:via-blue-900/30 dark:to-purple-900/20 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       {/* Enhanced Header */}
-      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg border-b border-white/20 dark:border-gray-700/50">
+      <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm shadow-lg border-b border-slate-200/60 dark:border-slate-700/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <motion.div
@@ -79,13 +79,13 @@ export default function Books() {
               transition={{ duration: 0.6 }}
               className="space-y-2"
             >
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-blue-600 via-purple-600 to-indigo-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
                 📚 Books Marketplace
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 text-lg">
+              <p className="text-slate-600 dark:text-slate-300 text-lg">
                 Discover affordable textbooks from fellow students
               </p>
-              <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400">
                 <div className="flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   <span>{mockBooks.length} books available</span>
@@ -105,11 +105,10 @@ export default function Books() {
             >
               <Link
                 to="/books/add"
-                className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                className="group relative inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <span className="mr-2 group-hover:rotate-12 transition-transform duration-300">📚</span>
-                <span className="relative z-10">Sell a Book</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-purple-600 to-blue-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span>Sell a Book</span>
               </Link>
             </motion.div>
           </div>
@@ -132,7 +131,7 @@ export default function Books() {
             <div className="flex items-center gap-4">
               <button
                 onClick={() => setShowFilters(!showFilters)}
-                className="inline-flex items-center px-4 py-2 bg-white dark:bg-gray-800 rounded-xl shadow-md border border-gray-200 dark:border-gray-600 text-gray-700 dark:text-gray-300 hover:bg-gray-50 dark:hover:bg-gray-700 transition-all duration-300 lg:hidden"
+                className="inline-flex items-center px-4 py-2 bg-white dark:bg-slate-800 rounded-xl shadow-md border border-slate-200 dark:border-slate-600 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700 transition-all duration-300 lg:hidden"
               >
                 <span className="mr-2">⚙️</span>
                 Filters
@@ -142,13 +141,13 @@ export default function Books() {
               <div className="hidden sm:flex items-center gap-2">
                 <button
                   onClick={() => setViewMode('grid')}
-                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'grid' ? 'bg-blue-100 text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
                 >
                   ⚏
                 </button>
                 <button
                   onClick={() => setViewMode('list')}
-                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'text-gray-400 hover:text-gray-600'}`}
+                  className={`p-2 rounded-lg transition-all duration-300 ${viewMode === 'list' ? 'bg-blue-100 text-blue-600' : 'text-slate-400 hover:text-slate-600'}`}
                 >
                   ☰
                 </button>
@@ -157,11 +156,11 @@ export default function Books() {
 
             <div className="flex items-center gap-6">
               <div className="flex items-center gap-3">
-                <span className="text-sm text-gray-600 dark:text-gray-300 font-medium">Sort by:</span>
+                <span className="text-sm text-slate-600 dark:text-slate-300 font-medium">Sort by:</span>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-600 rounded-xl px-4 py-2 text-gray-900 dark:text-gray-100 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
+                  className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-600 rounded-xl px-4 py-2 text-slate-900 dark:text-slate-100 text-sm focus:ring-2 focus:ring-blue-500 focus:border-transparent shadow-sm"
                 >
                   <option value="newest">🆕 Newest First</option>
                   <option value="price-low">💰 Price: Low to High</option>
@@ -170,8 +169,8 @@ export default function Books() {
                 </select>
               </div>
               
-              <div className="px-4 py-2 bg-gradient-to-r from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 rounded-xl">
-                <span className="text-sm font-semibold text-gray-700 dark:text-gray-200">
+              <div className="px-4 py-2 bg-blue-100 dark:bg-blue-900/50 rounded-xl">
+                <span className="text-sm font-semibold text-slate-700 dark:text-slate-200">
                   {filteredBooks.length} books found
                 </span>
               </div>
@@ -192,9 +191,9 @@ export default function Books() {
               transition={{ duration: 0.3 }}
               className={`lg:col-span-1 ${showFilters ? 'block' : 'hidden lg:block'}`}
             >
-              <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-xl border border-white/50 dark:border-gray-600/50 p-6 sticky top-4 lg:top-6 z-30">
+              <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-3xl shadow-xl border border-slate-200/60 dark:border-slate-600/60 p-6 sticky top-4 lg:top-6 z-30">
                 <div className="flex items-center justify-between mb-8">
-                  <h2 className="text-xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">
+                  <h2 className="text-xl font-bold text-slate-900 dark:text-white">
                     🎯 Filters
                   </h2>
                   <button
@@ -207,7 +206,7 @@ export default function Books() {
 
                 {/* Category Filter */}
                 <div className="mb-8">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center">
                     <span className="w-2 h-2 bg-blue-500 rounded-full mr-3"></span>
                     📖 Category
                   </h3>
@@ -220,9 +219,9 @@ export default function Books() {
                           value={category}
                           checked={selectedCategory === category}
                           onChange={(e) => setSelectedCategory(e.target.value)}
-                          className="w-4 h-4 text-blue-600 border-2 border-gray-300 dark:border-gray-500 focus:ring-blue-500 focus:ring-2"
+                          className="w-4 h-4 text-blue-600 border-2 border-slate-300 dark:border-slate-500 focus:ring-blue-500 focus:ring-2"
                         />
-                        <span className="ml-3 text-sm text-gray-700 dark:text-gray-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
+                        <span className="ml-3 text-sm text-slate-700 dark:text-slate-300 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors">
                           {category}
                         </span>
                       </label>
@@ -232,7 +231,7 @@ export default function Books() {
 
                 {/* Condition Filter */}
                 <div className="mb-8">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center">
                     <span className="w-2 h-2 bg-green-500 rounded-full mr-3"></span>
                     ⭐ Condition
                   </h3>
@@ -245,9 +244,9 @@ export default function Books() {
                           value={condition}
                           checked={selectedCondition === condition}
                           onChange={(e) => setSelectedCondition(e.target.value)}
-                          className="w-4 h-4 text-green-600 border-2 border-gray-300 dark:border-gray-500 focus:ring-green-500 focus:ring-2"
+                          className="w-4 h-4 text-green-600 border-2 border-slate-300 dark:border-slate-500 focus:ring-green-500 focus:ring-2"
                         />
-                        <span className="ml-3 text-sm text-gray-700 dark:text-gray-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
+                        <span className="ml-3 text-sm text-slate-700 dark:text-slate-300 group-hover:text-green-600 dark:group-hover:text-green-400 transition-colors">
                           {condition}
                         </span>
                       </label>
@@ -257,7 +256,7 @@ export default function Books() {
 
                 {/* Price Range Filter */}
                 <div className="mb-6">
-                  <h3 className="text-sm font-bold text-gray-900 dark:text-gray-100 mb-4 flex items-center">
+                  <h3 className="text-sm font-bold text-slate-900 dark:text-slate-100 mb-4 flex items-center">
                     <span className="w-2 h-2 bg-amber-500 rounded-full mr-3"></span>
                     💰 Price Range
                   </h3>
@@ -269,9 +268,9 @@ export default function Books() {
                           name="priceRange"
                           checked={selectedPriceRange === range}
                           onChange={() => setSelectedPriceRange(range)}
-                          className="w-4 h-4 text-amber-600 border-2 border-gray-300 dark:border-gray-500 focus:ring-amber-500 focus:ring-2"
+                          className="w-4 h-4 text-amber-600 border-2 border-slate-300 dark:border-slate-500 focus:ring-amber-500 focus:ring-2"
                         />
-                        <span className="ml-3 text-sm text-gray-700 dark:text-gray-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
+                        <span className="ml-3 text-sm text-slate-700 dark:text-slate-300 group-hover:text-amber-600 dark:group-hover:text-amber-400 transition-colors">
                           {range.label}
                         </span>
                       </label>
@@ -302,7 +301,7 @@ export default function Books() {
                     animate={{ opacity: 1, y: 0, scale: 1 }}
                     transition={{ duration: 0.5, ease: "easeOut", delay: index * 0.1 }}
                     whileHover={{ y: -8, scale: 1.02 }}
-                    className="group bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm rounded-3xl shadow-lg border border-white/50 dark:border-gray-600/50 overflow-hidden hover:shadow-2xl transition-all duration-500"
+                    className="group bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm rounded-3xl shadow-lg border border-slate-200/60 dark:border-slate-600/60 overflow-hidden hover:shadow-2xl transition-all duration-500"
                   >
                     {/* Enhanced Book Image */}
                     <div className="relative overflow-hidden">
@@ -332,7 +331,7 @@ export default function Books() {
                       {/* New Badge for recent listings */}
                       {new Date() - new Date(book.postedDate) < 7 * 24 * 60 * 60 * 1000 && (
                         <div className="absolute bottom-4 left-4">
-                          <span className="px-2 py-1 text-xs font-bold text-white bg-gradient-to-r from-red-500 to-pink-500 rounded-full shadow-lg">
+                          <span className="px-2 py-1 text-xs font-bold text-white bg-red-600 rounded-full shadow-lg">
                             🆕 NEW
                           </span>
                         </div>
@@ -344,12 +343,12 @@ export default function Books() {
                       <div>
                         <Link
                           to={`/books/${book.id}`}
-                          className="text-xl font-bold text-gray-900 dark:text-gray-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors block leading-tight"
+                          className="text-xl font-bold text-slate-900 dark:text-slate-100 hover:text-blue-600 dark:hover:text-blue-400 transition-colors block leading-tight"
                         >
                           {book.title}
                         </Link>
-                        <p className="text-gray-600 dark:text-gray-300 mt-1 font-medium">by {book.author}</p>
-                        <span className="inline-block mt-2 px-3 py-1 bg-gradient-to-r from-blue-100 to-purple-100 text-blue-700 rounded-full text-xs font-semibold">
+                        <p className="text-slate-600 dark:text-slate-300 mt-1 font-medium">by {book.author}</p>
+                        <span className="inline-block mt-2 px-3 py-1 bg-blue-100 text-blue-700 rounded-full text-xs font-semibold">
                           {book.category}
                         </span>
                       </div>
@@ -357,18 +356,18 @@ export default function Books() {
                       {/* Enhanced Price Display */}
                       <div className="space-y-2">
                         <div className="flex items-center gap-3">
-                          <span className="text-3xl font-bold bg-gradient-to-r from-green-600 to-emerald-600 bg-clip-text text-transparent">
+                          <span className="text-3xl font-bold text-green-600 dark:text-green-400">
                             ${book.price}
                           </span>
                           {book.originalPrice && (
-                            <span className="text-lg text-gray-400 line-through">
+                            <span className="text-lg text-slate-400 line-through">
                               ${book.originalPrice}
                             </span>
                           )}
                         </div>
                         {book.originalPrice && (
-                          <div className="inline-flex items-center px-3 py-1 bg-gradient-to-r from-green-100 to-emerald-100 rounded-full">
-                            <span className="text-sm text-green-700 font-bold">
+                          <div className="inline-flex items-center px-3 py-1 bg-green-100 dark:bg-green-900/30 rounded-full">
+                            <span className="text-sm text-green-700 dark:text-green-400 font-bold">
                               💰 Save ${(book.originalPrice - book.price).toFixed(2)} ({Math.round((1 - book.price / book.originalPrice) * 100)}% off)
                             </span>
                           </div>
@@ -376,17 +375,17 @@ export default function Books() {
                       </div>
 
                       {/* Enhanced Seller Info */}
-                      <div className="flex items-center gap-3 p-3 bg-gray-50 dark:bg-gray-700/50 rounded-2xl">
+                      <div className="flex items-center gap-3 p-3 bg-slate-50 dark:bg-slate-700/60 rounded-2xl">
                         <img
                           src={book.seller.avatar}
                           alt={book.seller.name}
-                          className="w-10 h-10 rounded-full border-2 border-white dark:border-gray-600 shadow-md"
+                          className="w-10 h-10 rounded-full border-2 border-white dark:border-slate-600 shadow-md"
                         />
                         <div className="flex-1">
-                          <span className="text-sm font-semibold text-gray-800 dark:text-gray-200">{book.seller.name}</span>
+                          <span className="text-sm font-semibold text-slate-800 dark:text-slate-200">{book.seller.name}</span>
                           <div className="flex items-center gap-1">
                             <span className="text-yellow-400">⭐</span>
-                            <span className="text-sm text-gray-600 dark:text-gray-300 font-medium">{book.seller.rating}</span>
+                            <span className="text-sm text-slate-600 dark:text-slate-300 font-medium">{book.seller.rating}</span>
                           </div>
                         </div>
                       </div>
@@ -395,15 +394,15 @@ export default function Books() {
                       <div className="grid grid-cols-3 gap-4 text-center">
                         <div className="space-y-1">
                           <div className="text-xl">👁️</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{book.views} views</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400">{book.views} views</div>
                         </div>
                         <div className="space-y-1">
                           <div className="text-xl">📍</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400 truncate">{book.location}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400 truncate">{book.location}</div>
                         </div>
                         <div className="space-y-1">
                           <div className="text-xl">📅</div>
-                          <div className="text-xs text-gray-500 dark:text-gray-400">{new Date(book.postedDate).toLocaleDateString()}</div>
+                          <div className="text-xs text-slate-500 dark:text-slate-400">{new Date(book.postedDate).toLocaleDateString()}</div>
                         </div>
                       </div>
 
@@ -411,7 +410,7 @@ export default function Books() {
                       <div className="flex gap-3 pt-2">
                         <Link
                           to={`/books/${book.id}`}
-                          className="flex-1 bg-gradient-to-r from-blue-600 to-purple-600 text-white text-center py-3 px-4 rounded-2xl hover:from-purple-600 hover:to-blue-600 transition-all duration-300 text-sm font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
+                          className="flex-1 bg-blue-600 text-white text-center py-3 px-4 rounded-2xl hover:bg-blue-700 transition-all duration-300 text-sm font-bold shadow-lg hover:shadow-xl transform hover:scale-105"
                         >
                           📖 View Details
                         </Link>
@@ -421,7 +420,7 @@ export default function Books() {
                           <motion.button 
                             whileHover={{ scale: 1.05 }}
                             whileTap={{ scale: 0.95 }}
-                            className="px-4 py-3 bg-white dark:bg-gray-800 border-2 border-gray-200 dark:border-gray-600 rounded-2xl text-gray-700 dark:text-gray-300 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 text-sm font-bold shadow-md hover:shadow-lg"
+                            className="px-4 py-3 bg-white dark:bg-slate-800 border-2 border-slate-200 dark:border-slate-600 rounded-2xl text-slate-700 dark:text-slate-300 hover:border-blue-300 dark:hover:border-blue-500 hover:text-blue-600 dark:hover:text-blue-400 transition-all duration-300 text-sm font-bold shadow-md hover:shadow-lg"
                           >
                             💬
                           </motion.button>
@@ -437,18 +436,18 @@ export default function Books() {
                 animate={{ opacity: 1, y: 0 }}
                 className="text-center py-16"
               >
-                <div className="w-24 h-24 mx-auto mb-6 bg-gradient-to-br from-blue-100 to-purple-100 dark:from-blue-900/50 dark:to-purple-900/50 rounded-full flex items-center justify-center shadow-lg">
+                <div className="w-24 h-24 mx-auto mb-6 bg-slate-100 dark:bg-slate-800 rounded-full flex items-center justify-center shadow-lg">
                   <span className="text-4xl">🔍</span>
                 </div>
-                <h3 className="text-2xl font-bold text-gray-900 dark:text-gray-100 mb-3">No books found</h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-6 max-w-md mx-auto">
+                <h3 className="text-2xl font-bold text-slate-900 dark:text-slate-100 mb-3">No books found</h3>
+                <p className="text-slate-600 dark:text-slate-300 mb-6 max-w-md mx-auto">
                   We couldn't find any books matching your criteria. Try adjusting your search or filters.
                 </p>
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
                   onClick={clearFilters}
-                  className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 text-white rounded-2xl font-bold shadow-lg hover:shadow-xl transition-all duration-300"
+                  className="inline-flex items-center px-6 py-3 bg-blue-600 text-white rounded-2xl font-bold shadow-lg hover:shadow-xl hover:bg-blue-700 transition-all duration-300"
                 >
                   <span className="mr-2">🗑️</span>
                   Clear All Filters

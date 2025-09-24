@@ -96,7 +96,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-gray-50 dark:bg-gray-900 flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
       <motion.div 
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
@@ -105,29 +105,18 @@ export default function Login() {
       >
         {/* Header */}
         <div className="text-center">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-          >
-            <h2 className="text-4xl font-bold text-white mb-2">
-              Welcome Back
-            </h2>
-            <p className="text-white/70 text-lg">Sign in to your Campus Market account</p>
-          </motion.div>
+          <h2 className="text-3xl font-bold text-gray-900 dark:text-white mb-2">
+            Welcome Back
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300">Sign in to your account</p>
         </div>
 
         {/* Login Form */}
-        <motion.div
-          initial={{ opacity: 0, scale: 0.95 }}
-          animate={{ opacity: 1, scale: 1 }}
-          transition={{ delay: 0.3, duration: 0.5 }}
-          className="bg-white/10 dark:bg-gray-800/30 backdrop-blur-lg rounded-2xl shadow-2xl border border-white/20 dark:border-gray-700/50 p-8"
-        >
+        <div className="bg-white dark:bg-gray-800 shadow-sm rounded-lg border border-gray-200 dark:border-gray-700 p-8">
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Email Field */}
             <div>
-              <label htmlFor="email" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="email" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Email Address *
               </label>
               <input
@@ -136,16 +125,16 @@ export default function Login() {
                 name="email"
                 value={formData.email}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 placeholder="your.email@college.edu"
                 required
               />
-              {errors.email && <p className="mt-1 text-sm text-red-400">{errors.email}</p>}
+              {errors.email && <p className="mt-1 text-sm text-red-500">{errors.email}</p>}
             </div>
 
             {/* Password Field */}
             <div>
-              <label htmlFor="password" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="password" className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                 Password *
               </label>
               <input
@@ -154,18 +143,18 @@ export default function Login() {
                 name="password"
                 value={formData.password}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-gray-100 placeholder-gray-500 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-colors"
                 placeholder="Enter your password"
                 required
               />
-              {errors.password && <p className="mt-1 text-sm text-red-400">{errors.password}</p>}
+              {errors.password && <p className="mt-1 text-sm text-red-500">{errors.password}</p>}
             </div>
 
             {/* Forgot Password Link */}
             <div className="text-right">
               <Link 
                 to="/forgot-password" 
-                className="text-sm text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                className="text-sm text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
               >
                 Forgot Password?
               </Link>
@@ -173,18 +162,16 @@ export default function Login() {
 
             {/* Submit Error Display */}
             {(errors.submit || error) && (
-              <div className="bg-red-500/10 border border-red-500/30 rounded-lg p-4">
-                <p className="text-red-400 text-sm">{errors.submit || error}</p>
+              <div className="bg-red-50 dark:bg-red-900/20 border border-red-200 dark:border-red-800 rounded-lg p-4">
+                <p className="text-red-600 dark:text-red-400 text-sm">{errors.submit || error}</p>
               </div>
             )}
 
             {/* Submit Button */}
-            <motion.button
+            <button
               type="submit"
               disabled={isSubmitting || loading}
-              whileHover={{ scale: (isSubmitting || loading) ? 1 : 1.02 }}
-              whileTap={{ scale: (isSubmitting || loading) ? 1 : 0.98 }}
-              className="w-full py-3 px-4 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed shadow-lg"
+              className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               {(isSubmitting || loading) ? (
                 <div className="flex items-center justify-center">
@@ -194,22 +181,22 @@ export default function Login() {
               ) : (
                 'Sign In'
               )}
-            </motion.button>
+            </button>
 
             {/* Sign Up Link */}
             <div className="text-center">
-              <p className="text-white/70 text-sm">
+              <p className="text-gray-600 dark:text-gray-400 text-sm">
                 Don't have an account?{' '}
                 <Link 
                   to="/signup" 
-                  className="text-blue-400 hover:text-blue-300 font-medium transition-colors"
+                  className="text-blue-600 hover:text-blue-700 dark:text-blue-400 dark:hover:text-blue-300 font-medium transition-colors"
                 >
                   Sign up here
                 </Link>
               </p>
             </div>
           </form>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

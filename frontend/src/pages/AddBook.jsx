@@ -217,7 +217,7 @@ const AddBook = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-blue-900 to-indigo-900 dark:from-gray-900 dark:via-purple-900 dark:to-indigo-900 py-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -225,10 +225,10 @@ const AddBook = () => {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
             Add New Book
           </h1>
-          <p className="text-blue-200 dark:text-gray-300 text-lg">
+          <p className="text-slate-600 dark:text-slate-300 text-lg">
             Share your books with the community
           </p>
         </motion.div>
@@ -238,12 +238,12 @@ const AddBook = () => {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 dark:bg-gray-800/20 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/50 p-8 shadow-2xl"
+          className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 shadow-xl"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Title Field */}
             <div>
-              <label htmlFor="title" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="title" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Book Title *
               </label>
               <input
@@ -252,7 +252,7 @@ const AddBook = () => {
                 name="title"
                 value={formData.title}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter book title"
                 required
               />
@@ -261,7 +261,7 @@ const AddBook = () => {
 
             {/* Author Field */}
             <div>
-              <label htmlFor="author" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="author" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Author *
               </label>
               <input
@@ -270,7 +270,7 @@ const AddBook = () => {
                 name="author"
                 value={formData.author}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="Enter author name"
                 required
               />
@@ -281,7 +281,7 @@ const AddBook = () => {
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
               {/* Price Field */}
               <div>
-                <label htmlFor="price" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="price" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Price ($) *
                 </label>
                 <input
@@ -292,7 +292,7 @@ const AddBook = () => {
                   onChange={handleInputChange}
                   min="0"
                   step="0.01"
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="0.00"
                   required
                 />
@@ -301,7 +301,7 @@ const AddBook = () => {
 
               {/* Condition Field */}
               <div>
-                <label htmlFor="condition" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="condition" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Condition *
                 </label>
                 <select
@@ -309,14 +309,14 @@ const AddBook = () => {
                   name="condition"
                   value={formData.condition}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
-                  <option value="" className="bg-gray-800 text-gray-100">Select condition</option>
-                  <option value="Like New" className="bg-gray-800 text-gray-100">Like New</option>
-                  <option value="Very Good" className="bg-gray-800 text-gray-100">Very Good</option>
-                  <option value="Good" className="bg-gray-800 text-gray-100">Good</option>
-                  <option value="Fair" className="bg-gray-800 text-gray-100">Fair</option>
+                  <option value="" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Select condition</option>
+                  <option value="Like New" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Like New</option>
+                  <option value="Very Good" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Very Good</option>
+                  <option value="Good" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Good</option>
+                  <option value="Fair" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Fair</option>
                 </select>
                 {errors.condition && <p className="mt-1 text-sm text-red-400">{errors.condition}</p>}
               </div>
@@ -324,7 +324,7 @@ const AddBook = () => {
 
             {/* Category Field */}
             <div>
-              <label htmlFor="category" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="category" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Category *
               </label>
               <select
@@ -332,23 +332,23 @@ const AddBook = () => {
                 name="category"
                 value={formData.category}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               >
-                <option value="" className="bg-gray-800 text-gray-100">Select category</option>
-                <option value="Textbook" className="bg-gray-800 text-gray-100">Textbook</option>
-                <option value="Fiction" className="bg-gray-800 text-gray-100">Fiction</option>
-                <option value="Non-Fiction" className="bg-gray-800 text-gray-100">Non-Fiction</option>
-                <option value="Reference" className="bg-gray-800 text-gray-100">Reference</option>
-                <option value="Study Guide" className="bg-gray-800 text-gray-100">Study Guide</option>
-                <option value="Other" className="bg-gray-800 text-gray-100">Other</option>
+                <option value="" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Select category</option>
+                <option value="Textbook" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Textbook</option>
+                <option value="Fiction" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Fiction</option>
+                <option value="Non-Fiction" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Non-Fiction</option>
+                <option value="Reference" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Reference</option>
+                <option value="Study Guide" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Study Guide</option>
+                <option value="Other" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Other</option>
               </select>
               {errors.category && <p className="mt-1 text-sm text-red-400">{errors.category}</p>}
             </div>
 
             {/* Book Photo Section */}
             <div>
-              <label className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-3">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-3">
                 Book Photo
               </label>
               
@@ -356,7 +356,7 @@ const AddBook = () => {
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white/70 dark:text-gray-300">Upload Photo</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-300">Upload Photo</span>
                     {imagePreview && (
                       <button
                         type="button"
@@ -376,7 +376,7 @@ const AddBook = () => {
                       onChange={handleImageUpload}
                       className="absolute inset-0 w-full h-full opacity-0 cursor-pointer"
                     />
-                    <div className="w-full px-4 py-8 bg-white/10 dark:bg-gray-700/30 border-2 border-dashed border-white/30 dark:border-gray-600/50 rounded-lg text-center hover:border-blue-500 transition-colors">
+                    <div className="w-full px-4 py-8 bg-slate-100 dark:bg-slate-700 border-2 border-dashed border-slate-300 dark:border-slate-600 rounded-lg text-center hover:border-blue-500 transition-colors">
                       {imagePreview ? (
                         <div className="space-y-2">
                           <img
@@ -384,18 +384,18 @@ const AddBook = () => {
                             alt="Preview"
                             className="mx-auto h-32 w-24 object-cover rounded-lg"
                           />
-                          <p className="text-sm text-white/70 dark:text-gray-300">Click to change photo</p>
+                          <p className="text-sm text-slate-600 dark:text-slate-300">Click to change photo</p>
                         </div>
                       ) : (
                         <div className="space-y-2">
-                          <div className="mx-auto w-12 h-12 text-white/50 dark:text-gray-400">
+                          <div className="mx-auto w-12 h-12 text-slate-400 dark:text-slate-400">
                             <svg fill="none" stroke="currentColor" viewBox="0 0 48 48">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={1} d="M28 8H12a4 4 0 00-4 4v20m32-12v8m0 0v8a4 4 0 01-4 4H12a4 4 0 01-4-4v-4m32-4l-3.172-3.172a4 4 0 00-5.656 0L28 28M8 32l9.172-9.172a4 4 0 015.656 0L28 28m0 0l4 4m4-24h8m-4-4v8m-12 4h.02" />
                             </svg>
                           </div>
                           <div>
-                            <p className="text-white/70 dark:text-gray-300">Click to upload a photo</p>
-                            <p className="text-xs text-white/50 dark:text-gray-400">PNG, JPG, GIF up to 5MB</p>
+                            <p className="text-slate-600 dark:text-slate-300">Click to upload a photo</p>
+                            <p className="text-xs text-slate-500 dark:text-slate-400">PNG, JPG, GIF up to 5MB</p>
                           </div>
                         </div>
                       )}
@@ -405,14 +405,14 @@ const AddBook = () => {
 
                 {/* OR Divider */}
                 <div className="flex items-center">
-                  <div className="flex-1 border-t border-white/20 dark:border-gray-600"></div>
-                  <span className="px-4 text-sm text-white/50 dark:text-gray-400">OR</span>
-                  <div className="flex-1 border-t border-white/20 dark:border-gray-600"></div>
+                  <div className="flex-1 border-t border-slate-300 dark:border-slate-600"></div>
+                  <span className="px-4 text-sm text-slate-500 dark:text-slate-400">OR</span>
+                  <div className="flex-1 border-t border-slate-300 dark:border-slate-600"></div>
                 </div>
 
                 {/* URL Input Option */}
                 <div>
-                  <label htmlFor="image" className="block text-sm text-white/70 dark:text-gray-300 mb-2">
+                  <label htmlFor="image" className="block text-sm text-slate-600 dark:text-slate-300 mb-2">
                     Enter Image URL
                   </label>
                   <input
@@ -422,7 +422,7 @@ const AddBook = () => {
                     value={formData.image}
                     onChange={handleInputChange}
                     disabled={!!formData.imageFile}
-                    className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent disabled:opacity-50 disabled:cursor-not-allowed"
                     placeholder="https://example.com/book-image.jpg"
                   />
                 </div>
@@ -433,9 +433,9 @@ const AddBook = () => {
 
             {/* Description Field */}
             <div>
-              <label htmlFor="description" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="description" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Description *
-                <span className="text-xs text-white/60 dark:text-gray-400 ml-2">
+                <span className="text-xs text-slate-500 dark:text-slate-400 ml-2">
                   ({formData.description.length}/1000 characters)
                 </span>
               </label>
@@ -446,7 +446,7 @@ const AddBook = () => {
                 onChange={handleInputChange}
                 rows="4"
                 maxLength="1000"
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent backdrop-blur-sm resize-none"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
                 placeholder="Describe the book's content, any highlights, condition notes, etc."
                 required
               />
@@ -476,7 +476,7 @@ const AddBook = () => {
                 disabled={isSubmitting}
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                className="px-6 py-3 bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-medium rounded-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Publishing...' : 'Publish Book'}
               </motion.button>

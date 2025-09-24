@@ -280,7 +280,7 @@ export default function OfferSkill() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-900 via-green-900 to-blue-900 dark:from-gray-900 dark:via-green-900 dark:to-blue-900 py-8">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 py-8">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Header */}
         <motion.div
@@ -288,10 +288,10 @@ export default function OfferSkill() {
           animate={{ opacity: 1, y: 0 }}
           className="text-center mb-8"
         >
-          <h1 className="text-4xl font-bold text-white mb-4">
+          <h1 className="text-4xl font-bold text-slate-800 dark:text-slate-100 mb-4">
             🎓 Offer Your Skills
           </h1>
-          <p className="text-green-200 dark:text-gray-300 text-lg">
+          <p className="text-slate-600 dark:text-slate-300 text-lg">
             Share your knowledge and help fellow students
           </p>
         </motion.div>
@@ -301,14 +301,14 @@ export default function OfferSkill() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.2 }}
-          className="bg-white/10 dark:bg-gray-800/20 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/50 p-8 shadow-2xl"
+          className="bg-white dark:bg-slate-800 rounded-2xl border border-slate-200 dark:border-slate-700 p-8 shadow-xl"
         >
           <form onSubmit={handleSubmit} className="space-y-6">
             {/* Basic Information */}
             <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
               {/* Title Field */}
               <div className="lg:col-span-2">
-                <label htmlFor="title" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="title" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Title *
                 </label>
                 <input
@@ -317,7 +317,7 @@ export default function OfferSkill() {
                   name="title"
                   value={formData.title}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="e.g., Advanced Calculus Tutoring"
                   required
                 />
@@ -326,7 +326,7 @@ export default function OfferSkill() {
 
               {/* Category Field */}
               <div>
-                <label htmlFor="category" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="category" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Category *
                 </label>
                 <select
@@ -334,12 +334,12 @@ export default function OfferSkill() {
                   name="category"
                   value={formData.category}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   required
                 >
-                  <option value="" className="bg-gray-800 text-gray-100">Select category</option>
+                  <option value="" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Select category</option>
                   {skillCategories.filter(cat => cat !== 'All Categories').map((category) => (
-                    <option key={category} value={category} className="bg-gray-800 text-gray-100">
+                    <option key={category} value={category} className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">
                       {category}
                     </option>
                   ))}
@@ -349,7 +349,7 @@ export default function OfferSkill() {
 
               {/* Subject Field */}
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="subject" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Subject *
                 </label>
                 <input
@@ -358,7 +358,7 @@ export default function OfferSkill() {
                   name="subject"
                   value={formData.subject}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="e.g., Calculus, Java, Spanish"
                   required
                 />
@@ -367,7 +367,7 @@ export default function OfferSkill() {
 
               {/* Hourly Rate Field */}
               <div>
-                <label htmlFor="hourlyRate" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="hourlyRate" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Hourly Rate ($) *
                 </label>
                 <input
@@ -379,7 +379,7 @@ export default function OfferSkill() {
                   min="5"
                   max="200"
                   step="0.50"
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="25.00"
                   required
                 />
@@ -388,7 +388,7 @@ export default function OfferSkill() {
 
               {/* Availability Field */}
               <div>
-                <label htmlFor="availability" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+                <label htmlFor="availability" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                   Availability *
                 </label>
                 <input
@@ -397,7 +397,7 @@ export default function OfferSkill() {
                   name="availability"
                   value={formData.availability}
                   onChange={handleInputChange}
-                  className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                  className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   placeholder="e.g., Mon-Fri 6-9 PM, Weekends"
                   required
                 />
@@ -407,7 +407,7 @@ export default function OfferSkill() {
 
             {/* Location Field */}
             <div>
-              <label htmlFor="location" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="location" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Location Preference *
               </label>
               <select
@@ -415,25 +415,25 @@ export default function OfferSkill() {
                 name="location"
                 value={formData.location}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 required
               >
-                <option value="" className="bg-gray-800 text-gray-100">Select location preference</option>
-                <option value="Online" className="bg-gray-800 text-gray-100">Online Only</option>
-                <option value="Campus" className="bg-gray-800 text-gray-100">On Campus</option>
-                <option value="Library" className="bg-gray-800 text-gray-100">Library</option>
-                <option value="Coffee Shop" className="bg-gray-800 text-gray-100">Coffee Shop</option>
-                <option value="Online/Campus" className="bg-gray-800 text-gray-100">Online or Campus</option>
-                <option value="Flexible" className="bg-gray-800 text-gray-100">Flexible</option>
+                <option value="" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Select location preference</option>
+                <option value="Online" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Online Only</option>
+                <option value="Campus" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">On Campus</option>
+                <option value="Library" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Library</option>
+                <option value="Coffee Shop" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Coffee Shop</option>
+                <option value="Online/Campus" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Online or Campus</option>
+                <option value="Flexible" className="bg-slate-50 dark:bg-slate-800 text-slate-900 dark:text-slate-100">Flexible</option>
               </select>
               {errors.location && <p className="mt-1 text-sm text-red-400">{errors.location}</p>}
             </div>
 
             {/* Contact Information Field */}
             <div>
-              <label htmlFor="contact" className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-2">
+              <label htmlFor="contact" className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-2">
                 Contact Information *
-                <span className="text-xs text-white/60 dark:text-gray-400 ml-2">
+                <span className="text-xs text-slate-500 dark:text-slate-400 ml-2">
                   (Email or Phone Number)
                 </span>
               </label>
@@ -443,7 +443,7 @@ export default function OfferSkill() {
                 name="contact"
                 value={formData.contact}
                 onChange={handleInputChange}
-                className="w-full px-4 py-3 bg-white/10 dark:bg-gray-700/30 border border-white/30 dark:border-gray-600/50 rounded-lg text-white dark:text-gray-100 placeholder-white/50 dark:placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-green-500 focus:border-transparent backdrop-blur-sm"
+                className="w-full px-4 py-3 bg-slate-50 dark:bg-slate-700 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-slate-100 placeholder-slate-500 dark:placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                 placeholder="e.g., your.email@college.edu or +1-555-123-4567"
                 required
               />
@@ -452,14 +452,14 @@ export default function OfferSkill() {
 
             {/* Profile Photo Section */}
             <div>
-              <label className="block text-sm font-medium text-white/90 dark:text-gray-200 mb-3">
+              <label className="block text-sm font-medium text-slate-700 dark:text-slate-200 mb-3">
                 Profile Photo
               </label>
               
               <div className="space-y-4">
                 <div>
                   <div className="flex items-center justify-between mb-2">
-                    <span className="text-sm text-white/70 dark:text-gray-300">Upload Your Photo</span>
+                    <span className="text-sm text-slate-600 dark:text-slate-300">Upload Your Photo</span>
                     {photoPreview && (
                       <button
                         type="button"
@@ -683,7 +683,7 @@ export default function OfferSkill() {
                 disabled={isSubmitting}
                 whileHover={{ scale: isSubmitting ? 1 : 1.02 }}
                 whileTap={{ scale: isSubmitting ? 1 : 0.98 }}
-                className="px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 backdrop-blur-sm disabled:opacity-50 disabled:cursor-not-allowed"
+                className="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-all duration-200 disabled:opacity-50 disabled:cursor-not-allowed"
               >
                 {isSubmitting ? 'Publishing...' : 'Publish Skill Offer'}
               </motion.button>

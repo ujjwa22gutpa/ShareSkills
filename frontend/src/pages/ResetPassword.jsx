@@ -197,82 +197,50 @@ const ResetPassword = () => {
 
   if (success) {
     return (
-      <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
-        <motion.div
-          initial={{ scale: 0.5, opacity: 0 }}
-          animate={{ scale: 1, opacity: 1 }}
-          className="w-full max-w-md p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-2xl text-center"
-        >
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6"
-          >
+      <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
+        <div className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm text-center">
+          <div className="w-20 h-20 bg-green-100 dark:bg-green-900/30 rounded-full flex items-center justify-center mx-auto mb-6">
             <CheckCircle className="w-12 h-12 text-green-600 dark:text-green-400" />
-          </motion.div>
+          </div>
           
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.4 }}
-          >
-            <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Password Reset Complete!
-            </h2>
-            <p className="text-gray-600 dark:text-gray-300 mb-4">
-              Your password has been successfully updated.
-            </p>
-            <p className="text-sm text-blue-600 dark:text-blue-400">
-              Redirecting to login page...
-            </p>
-          </motion.div>
-        </motion.div>
+          <h2 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Password Reset Complete!
+          </h2>
+          <p className="text-gray-600 dark:text-gray-300 mb-4">
+            Your password has been successfully updated.
+          </p>
+          <p className="text-sm text-blue-600 dark:text-blue-400">
+            Redirecting to login page...
+          </p>
+        </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center p-4 bg-gradient-to-br from-blue-50 via-indigo-50 to-purple-50 dark:from-gray-900 dark:via-blue-900/20 dark:to-purple-900/20">
+    <div className="min-h-screen flex items-center justify-center p-4 bg-gray-50 dark:bg-gray-900">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6 }}
-        className="w-full max-w-md p-8 bg-white/70 dark:bg-gray-800/70 backdrop-blur-xl rounded-2xl border border-white/20 dark:border-gray-700/30 shadow-2xl"
+        className="w-full max-w-md p-8 bg-white dark:bg-gray-800 rounded-lg border border-gray-200 dark:border-gray-700 shadow-sm"
       >
         {/* Header */}
         <div className="text-center mb-8">
-          <motion.div
-            initial={{ scale: 0 }}
-            animate={{ scale: 1 }}
-            transition={{ delay: 0.2, type: "spring", stiffness: 200 }}
-            className="w-16 h-16 bg-gradient-to-r from-green-600 to-blue-600 rounded-2xl flex items-center justify-center mx-auto mb-6 shadow-lg"
-          >
-            <Key className="w-8 h-8 text-white" />
-          </motion.div>
+          <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-lg flex items-center justify-center mx-auto mb-6">
+            <Key className="w-8 h-8 text-blue-600 dark:text-blue-400" />
+          </div>
           
-          <motion.div
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.3 }}
-          >
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
-              Reset Password
-            </h1>
-            <p className="text-gray-600 dark:text-gray-300 text-sm">
-              Create a new secure password for your account
-            </p>
-          </motion.div>
+          <h1 className="text-2xl font-bold text-gray-900 dark:text-white mb-2">
+            Reset Password
+          </h1>
+          <p className="text-gray-600 dark:text-gray-300 text-sm">
+            Create a new secure password for your account
+          </p>
         </div>
 
         {/* Form */}
-        <motion.form
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          onSubmit={handleSubmit}
-          className="space-y-6"
-        >
+        <form onSubmit={handleSubmit} className="space-y-6">
           {/* New Password Field */}
           <div>
             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -286,7 +254,7 @@ const ResetPassword = () => {
                 value={formData.password}
                 onChange={handleInputChange}
                 placeholder="Enter your new password"
-                className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
+                className={`w-full pl-10 pr-12 py-3 bg-white dark:bg-gray-700 border rounded-lg focus:outline-none focus:ring-2 transition-colors duration-200 ${
                   errors.password
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-transparent'
@@ -371,7 +339,7 @@ const ResetPassword = () => {
                 value={formData.confirmPassword}
                 onChange={handleInputChange}
                 placeholder="Confirm your new password"
-                className={`w-full pl-10 pr-12 py-3 bg-white/50 dark:bg-gray-700/50 backdrop-blur-sm border rounded-lg focus:outline-none focus:ring-2 transition-all duration-200 ${
+                className={`w-full pl-10 pr-12 py-3 bg-white dark:bg-gray-700 border rounded-lg focus:outline-none focus:ring-2 transition-colors duration-200 ${
                   errors.confirmPassword
                     ? 'border-red-500 focus:ring-red-500'
                     : 'border-gray-300 dark:border-gray-600 focus:ring-blue-500 focus:border-transparent'
@@ -411,21 +379,14 @@ const ResetPassword = () => {
           )}
 
           {/* Reset Password Button */}
-          <motion.button
-            initial={{ y: 20, opacity: 0 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={{ delay: 0.5 }}
+          <button
             type="submit"
             disabled={loading}
-            className="w-full py-3 px-4 bg-gradient-to-r from-green-600 to-blue-600 hover:from-green-700 hover:to-blue-700 text-white font-medium rounded-lg transition-all duration-200 transform hover:scale-[1.02] disabled:opacity-50 disabled:cursor-not-allowed disabled:transform-none shadow-lg flex items-center justify-center space-x-2"
+            className="w-full py-3 px-4 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed flex items-center justify-center space-x-2"
           >
             {loading ? (
               <>
-                <motion.div
-                  animate={{ rotate: 360 }}
-                  transition={{ duration: 1, repeat: Infinity, ease: "linear" }}
-                  className="w-5 h-5 border-2 border-white border-t-transparent rounded-full"
-                />
+                <div className="w-5 h-5 border-2 border-white border-t-transparent rounded-full animate-spin" />
                 <span>Resetting Password...</span>
               </>
             ) : (
@@ -434,16 +395,11 @@ const ResetPassword = () => {
                 <span>Reset Password</span>
               </>
             )}
-          </motion.button>
-        </motion.form>
+          </button>
+        </form>
 
         {/* Back to Login */}
-        <motion.div
-          initial={{ y: 20, opacity: 0 }}
-          animate={{ y: 0, opacity: 1 }}
-          transition={{ delay: 0.6 }}
-          className="text-center mt-6"
-        >
+        <div className="text-center mt-6">
           <Link
             to="/login"
             className="inline-flex items-center space-x-2 text-gray-600 dark:text-gray-300 hover:text-gray-800 dark:hover:text-white transition-colors text-sm"
@@ -451,7 +407,7 @@ const ResetPassword = () => {
             <ArrowLeft size={16} />
             <span>Back to Login</span>
           </Link>
-        </motion.div>
+        </div>
       </motion.div>
     </div>
   );

@@ -74,9 +74,9 @@ export default function Skills() {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-green-50/30 to-blue-50/20 dark:from-gray-900 dark:via-green-900/30 dark:to-blue-900/20 transition-colors duration-300">
+    <div className="min-h-screen bg-slate-50 dark:bg-slate-900 transition-colors duration-300">
       {/* Header */}
-      <div className="bg-white/80 dark:bg-gray-800/80 backdrop-blur-sm shadow-lg border-b border-white/20 dark:border-gray-700/50">
+      <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-sm shadow-lg border-b border-slate-200/60 dark:border-slate-700/60">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
           <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between gap-6">
             <motion.div
@@ -85,13 +85,13 @@ export default function Skills() {
               transition={{ duration: 0.6 }}
               className="space-y-2"
             >
-              <h1 className="text-4xl font-bold bg-gradient-to-r from-green-600 via-blue-600 to-purple-600 bg-clip-text text-transparent">
+              <h1 className="text-4xl font-bold text-slate-900 dark:text-white">
                 🎓 Skills Exchange
               </h1>
-              <p className="text-gray-600 dark:text-gray-300 text-lg">
+              <p className="text-slate-600 dark:text-slate-300 text-lg">
                 Connect with tutors and study partners
               </p>
-              <div className="flex items-center gap-6 text-sm text-gray-500 dark:text-gray-400">
+              <div className="flex items-center gap-6 text-sm text-slate-500 dark:text-slate-400">
                 <div className="flex items-center gap-1">
                   <span className="w-2 h-2 bg-green-500 rounded-full"></span>
                   <span>{mockSkills.filter(s => s.type === 'offer').length} tutors available</span>
@@ -111,11 +111,10 @@ export default function Skills() {
             >
               <Link
                 to="/skills/offer"
-                className="group relative inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-blue-600 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105 overflow-hidden"
+                className="group relative inline-flex items-center px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-2xl font-semibold shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
               >
                 <span className="mr-2 group-hover:rotate-12 transition-transform duration-300">🎓</span>
-                <span className="relative z-10">Offer Skills</span>
-                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-green-600 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                <span>Offer Skills</span>
               </Link>
             </motion.div>
           </div>
@@ -139,9 +138,9 @@ export default function Skills() {
             transition={{ duration: 0.6, delay: 0.1 }}
             className="lg:w-80 flex-shrink-0"
           >
-            <div className="bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/50 p-6 shadow-xl sticky top-8">
+            <div className="bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg rounded-2xl border border-slate-200/60 dark:border-slate-700/60 p-6 shadow-xl sticky top-8">
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-lg font-semibold text-gray-900 dark:text-white">Filters</h3>
+                <h3 className="text-lg font-semibold text-slate-900 dark:text-white">Filters</h3>
                 <button
                   onClick={clearFilters}
                   className="text-sm text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300 transition-colors"
@@ -153,7 +152,7 @@ export default function Skills() {
               <div className="space-y-6">
                 {/* Type Filter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                     Type
                   </label>
                   <div className="space-y-2">
@@ -165,9 +164,9 @@ export default function Skills() {
                           value={type.value}
                           checked={selectedType === type.value}
                           onChange={(e) => setSelectedType(e.target.value)}
-                          className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                          className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                        <span className="ml-2 text-sm text-slate-700 dark:text-slate-300">
                           {type.label}
                         </span>
                       </label>
@@ -177,13 +176,13 @@ export default function Skills() {
 
                 {/* Category Filter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                     Category
                   </label>
                   <select
                     value={selectedCategory}
                     onChange={(e) => setSelectedCategory(e.target.value)}
-                    className="w-full px-3 py-2 bg-white/50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     {skillCategories.map((category) => (
                       <option key={category} value={category}>
@@ -195,7 +194,7 @@ export default function Skills() {
 
                 {/* Rate Range Filter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                     Hourly Rate
                   </label>
                   <div className="space-y-2">
@@ -206,9 +205,9 @@ export default function Skills() {
                           name="rate"
                           checked={selectedRateRange.label === range.label}
                           onChange={() => setSelectedRateRange(range)}
-                          className="w-4 h-4 text-blue-600 border-gray-300 focus:ring-blue-500"
+                          className="w-4 h-4 text-blue-600 border-slate-300 focus:ring-blue-500"
                         />
-                        <span className="ml-2 text-sm text-gray-700 dark:text-gray-300">
+                        <span className="ml-2 text-sm text-slate-700 dark:text-slate-300">
                           {range.label}
                         </span>
                       </label>
@@ -218,13 +217,13 @@ export default function Skills() {
 
                 {/* Availability Filter */}
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-3">
+                  <label className="block text-sm font-medium text-slate-700 dark:text-slate-300 mb-3">
                     Availability
                   </label>
                   <select
                     value={selectedAvailability}
                     onChange={(e) => setSelectedAvailability(e.target.value)}
-                    className="w-full px-3 py-2 bg-white/50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+                    className="w-full px-3 py-2 bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-transparent"
                   >
                     {availabilityOptions.map((option) => (
                       <option key={option} value={option}>
@@ -241,16 +240,16 @@ export default function Skills() {
           <div className="flex-1">
             {/* Sort and Results */}
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 mb-6">
-              <p className="text-gray-600 dark:text-gray-300">
+              <p className="text-slate-600 dark:text-slate-300">
                 Showing {filteredSkills.length} of {mockSkills.length} skills
               </p>
               
               <div className="flex items-center gap-2">
-                <label className="text-sm text-gray-600 dark:text-gray-300">Sort by:</label>
+                <label className="text-sm text-slate-600 dark:text-slate-300">Sort by:</label>
                 <select
                   value={sortBy}
                   onChange={(e) => setSortBy(e.target.value)}
-                  className="px-3 py-2 bg-white/50 dark:bg-gray-700/50 border border-gray-300 dark:border-gray-600 rounded-lg text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500"
+                  className="px-3 py-2 bg-white/60 dark:bg-slate-700/60 border border-slate-300 dark:border-slate-600 rounded-lg text-slate-900 dark:text-white focus:ring-2 focus:ring-blue-500"
                 >
                   <option value="newest">Newest</option>
                   <option value="rating">Highest Rated</option>
@@ -276,7 +275,7 @@ export default function Skills() {
                       animate={{ opacity: 1, scale: 1 }}
                       exit={{ opacity: 0, scale: 0.9 }}
                       whileHover={{ y: -5 }}
-                      className="group relative bg-white/90 dark:bg-gray-800/90 backdrop-blur-lg rounded-2xl border border-white/20 dark:border-gray-700/50 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
+                      className="group relative bg-white/95 dark:bg-slate-800/95 backdrop-blur-lg rounded-2xl border border-slate-200/60 dark:border-slate-700/60 overflow-hidden shadow-xl hover:shadow-2xl transition-all duration-300"
                     >
                       <Link to={`/skills/${skill.id}`} className="block p-6">
                         {/* Header */}
@@ -288,16 +287,16 @@ export default function Skills() {
                               className="w-12 h-12 rounded-full object-cover border-2 border-white/50"
                             />
                             <div>
-                              <h3 className="font-semibold text-gray-900 dark:text-white line-clamp-1">
+                              <h3 className="font-semibold text-slate-900 dark:text-white line-clamp-1">
                                 {person.name}
                               </h3>
                               <div className="flex items-center gap-1">
                                 <span className="text-yellow-500">⭐</span>
-                                <span className="text-sm text-gray-600 dark:text-gray-300">
+                                <span className="text-sm text-slate-600 dark:text-slate-300">
                                   {person.rating}
                                 </span>
                                 {person.totalReviews && (
-                                  <span className="text-sm text-gray-500 dark:text-gray-400">
+                                  <span className="text-sm text-slate-500 dark:text-slate-400">
                                     ({person.totalReviews})
                                   </span>
                                 )}
@@ -323,7 +322,7 @@ export default function Skills() {
                         </div>
 
                         {/* Title and Category */}
-                        <h4 className="text-lg font-semibold text-gray-900 dark:text-white mb-2 line-clamp-2">
+                        <h4 className="text-lg font-semibold text-slate-900 dark:text-white mb-2 line-clamp-2">
                           {skill.title}
                         </h4>
                         
@@ -331,13 +330,13 @@ export default function Skills() {
                           <span className="px-2 py-1 bg-blue-100 dark:bg-blue-900/30 text-blue-700 dark:text-blue-400 text-xs rounded-full">
                             {skill.category}
                           </span>
-                          <span className="px-2 py-1 bg-purple-100 dark:bg-purple-900/30 text-purple-700 dark:text-purple-400 text-xs rounded-full">
+                          <span className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded-full">
                             {skill.subject}
                           </span>
                         </div>
 
                         {/* Description */}
-                        <p className="text-gray-600 dark:text-gray-300 text-sm mb-4 line-clamp-3">
+                        <p className="text-slate-600 dark:text-slate-300 text-sm mb-4 line-clamp-3">
                           {skill.description}
                         </p>
 
@@ -346,20 +345,20 @@ export default function Skills() {
                           {skill.skills.slice(0, 3).map((skillTag, index) => (
                             <span
                               key={index}
-                              className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-700 dark:text-gray-300 text-xs rounded"
+                              className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-700 dark:text-slate-300 text-xs rounded"
                             >
                               {skillTag}
                             </span>
                           ))}
                           {skill.skills.length > 3 && (
-                            <span className="px-2 py-1 bg-gray-100 dark:bg-gray-700 text-gray-500 dark:text-gray-400 text-xs rounded">
+                            <span className="px-2 py-1 bg-slate-100 dark:bg-slate-700 text-slate-500 dark:text-slate-400 text-xs rounded">
                               +{skill.skills.length - 3} more
                             </span>
                           )}
                         </div>
 
                         {/* Footer */}
-                        <div className="flex items-center justify-between text-sm text-gray-500 dark:text-gray-400">
+                        <div className="flex items-center justify-between text-sm text-slate-500 dark:text-slate-400">
                           <span>📍 {skill.location}</span>
                           <span>🕒 {skill.availability}</span>
                         </div>
@@ -376,7 +375,7 @@ export default function Skills() {
                         <div className="px-6 pb-4">
                           <Link 
                             to={`/contact/${skill.id}`}
-                            className="w-full px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-500 hover:from-blue-600 hover:to-purple-600 text-white text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group"
+                            className="w-full px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-lg transition-all duration-200 flex items-center justify-center gap-2 group"
                           >
                             <span className="text-sm">📧</span>
                             <span>Contact {person.name}</span>
@@ -400,10 +399,10 @@ export default function Skills() {
                 className="text-center py-12"
               >
                 <div className="text-6xl mb-4">🔍</div>
-                <h3 className="text-xl font-semibold text-gray-900 dark:text-white mb-2">
+                <h3 className="text-xl font-semibold text-slate-900 dark:text-white mb-2">
                   No skills found
                 </h3>
-                <p className="text-gray-600 dark:text-gray-300 mb-4">
+                <p className="text-slate-600 dark:text-slate-300 mb-4">
                   Try adjusting your filters or search terms
                 </p>
                 <button
